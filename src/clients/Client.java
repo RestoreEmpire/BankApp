@@ -2,8 +2,8 @@ package clients;
 import java.math.BigDecimal;
 
 import accounts.Account;
-import data.process.DataValidation;
-import data.process.generators.ClientIdGenerator;
+import data.processing.DataValidation;
+import data.processing.generators.ClientIdGenerator;
 
 
 public class Client {

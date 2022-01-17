@@ -1,4 +1,4 @@
-package data.process;
+package data.processing;
 import java.math.BigDecimal;
 
 public class DataValidation {

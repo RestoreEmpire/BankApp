@@ -2,8 +2,8 @@ package accounts;
 
 import java.math.BigDecimal;
 import clients.Client;
-import data.process.DataValidation;
-import data.process.generators.AccountNumberGenerator;
+import data.processing.DataValidation;
+import data.processing.generators.AccountNumberGenerator;
 
 public class Account {
 
