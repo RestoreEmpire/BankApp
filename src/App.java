@@ -1,5 +1,6 @@
-import accounts.Account;
 import persons.clients.Client;
+import persons.employees.Manager;
+import accounts.Account;
 
 public class App {
 // банк
@@ -7,17 +8,16 @@ public class App {
 // клиенты
 
     public static void main(String[] args) throws Exception {
-        // Client client = new Client("Рахат Лукумов", "1234123412341234");
-        // System.out.println(client);
-        // Account account = new Account(client, "123", 123);
-        // System.out.println(account);
-        Client client = new Client("Никита", "Abc", "Cde", "2021-10-17");
-        Account account = new Account(client);
-        System.out.println(account.getFunds());
-        client.addFunds(account, 100);
-        System.out.println(account.getFunds());
-        client.withdrawFunds(account, 100);
-        System.out.println(account.getFunds());
+        Manager manager = new Manager();
+        Client client = manager.registerClient("Николай", "Николаевич", "Николаев", "1990-10-17");
         System.out.println(client);
+        Account account = manager.registerNewAccount(client);
+        System.out.println(account);
+        account.addFunds(123);
+        System.out.println(account.getFunds());
+        account.addFunds(215);
+        System.out.println(account.getFunds());
+        System.out.println(account);
+        
     }
 }   
