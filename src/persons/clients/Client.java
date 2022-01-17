@@ -1,45 +1,27 @@
-package clients;
+package persons.clients;
+
 import java.math.BigDecimal;
 
 import accounts.Account;
-import data.processing.DataValidation;
 import data.processing.generators.ClientIdGenerator;
+import persons.Person;
 
-
-public class Client {
+public class Client extends Person {
 
     // TODO: больше информации о клиенте
     private String id;
-    private String name = "unsetted";
 
-    public Client(String name){
-        setName(name);
+    public Client(String firstName, String surname, String middlename, String birthDate) {
+        setAllInfo(firstName, surname, middlename, birthDate);
+        setId();
+    }
+
+    public void setId() {
         id = new ClientIdGenerator().generate();
-    }
-    public Client(String name, String id) {
-        setId(id);
-        setName(name);
-    }
-    
-    public void setName(String name) {
-        this.name = DataValidation.validateName(name) ? name : this.name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    private void setId(String id) {
-        this.id = DataValidation.validateId(id) ? id : this.id;
     }
 
     public String getId() {
         return id;
-    }
-
-    public void setInfo(String name, String id) {
-        setId(id);
-        setName(name);
     }
 
     //TODO: клиент не должен делать изменения счёта самостоятельно, он должен делать запрос
@@ -61,8 +43,9 @@ public class Client {
 
     @Override
     public String toString() {
-        return  "ID: " + id + "\n" +
-                "Name: " + name;
+        return  "ID: " + id + '\n' +
+                "Name: " + getFullName() + '\n' +
+                "Birth Date: " + getBirthDate();
     }
 }
 

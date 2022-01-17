@@ -1,9 +1,10 @@
 package accounts;
 
 import java.math.BigDecimal;
-import clients.Client;
+
 import data.processing.DataValidation;
 import data.processing.generators.AccountNumberGenerator;
+import persons.clients.Client;
 
 public class Account {
 
@@ -28,13 +29,16 @@ public class Account {
     public void setFunds(BigDecimal funds) {
         this.funds = DataValidation.validateAccountFunds(funds) ? funds : this.funds;
     }
+
+    public String getAccountNumber(){
+        return accountNumber;
+    }
     
     @Override
     public String toString() {
-        return  "Account number: " + accountNumber + '\n' +
-                "Client data: " + '\n' + 
-                client.toString() + '\n' +
-                "Funds: " + funds;
+        return  "Account number: " + getAccountNumber() + '\n' +
+                "Client ID: " + client.getId() + '\n' +
+                "Funds: " + getFunds();
     }
 
 }

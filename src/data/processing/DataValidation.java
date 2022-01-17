@@ -9,7 +9,7 @@ public class DataValidation {
     public static boolean validateName(String name){
 
         try {
-            if(name.length() > 128) // не больше 127 символов
+            if(name.length() > 64) // не больше 63 символов
                 throw new Exception("Name length is too long. Please, use shortened name");
             for(char c : name.toCharArray()) {
                 if(!Character.isLetter(c) && !Character.isSpaceChar(c) && !(c == '.')) // только буквы, точки и пробелы

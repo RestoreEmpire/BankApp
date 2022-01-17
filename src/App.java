@@ -1,5 +1,5 @@
 import accounts.Account;
-import clients.Client;
+import persons.clients.Client;
 
 public class App {
 // банк
@@ -11,12 +11,13 @@ public class App {
         // System.out.println(client);
         // Account account = new Account(client, "123", 123);
         // System.out.println(account);
-        Client client = new Client("Никита");
+        Client client = new Client("Никита", "Abc", "Cde", "2021-10-17");
         Account account = new Account(client);
         System.out.println(account.getFunds());
         client.addFunds(account, 100);
         System.out.println(account.getFunds());
         client.withdrawFunds(account, 100);
         System.out.println(account.getFunds());
+        System.out.println(client);
     }
 }   
