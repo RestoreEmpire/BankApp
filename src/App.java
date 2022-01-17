@@ -18,6 +18,5 @@ public class App {
         System.out.println(account.getFunds());
         client.withdrawFunds(account, 100);
         System.out.println(account.getFunds());
-
     }
 }   
