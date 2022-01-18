@@ -1,23 +1,21 @@
-import persons.clients.Client;
-import persons.employees.Manager;
-import accounts.Account;
+import java.io.File;
+import java.nio.charset.StandardCharsets;
+import java.util.Scanner;
+
 
 public class App {
-// банк
-// расчётные счета
-// клиенты
-
     public static void main(String[] args) throws Exception {
-        Manager manager = new Manager();
-        Client client = manager.registerClient("Николай", "Николаевич", "Николаев", "1990-10-17");
-        System.out.println(client);
-        Account account = manager.registerNewAccount(client);
-        System.out.println(account);
-        account.addFunds(123);
-        System.out.println(account.getFunds());
-        account.addFunds(215);
-        System.out.println(account.getFunds());
-        System.out.println(account);
-        
+        File file = new File("./test.txt");
+        var frw = new FileReadWrite(file);
+        System.out.println(frw.getScanedString());
+        frw.writeToEnd("YAML Ain't Markup Language\n"); 
+        try (Scanner sc = new Scanner(file, StandardCharsets.UTF_8)) {
+            while(sc.hasNextLine()){
+                
+                System.out.println(sc.nextLine());
+            }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
     }
-}   
+}
