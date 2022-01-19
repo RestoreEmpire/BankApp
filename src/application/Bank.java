@@ -8,6 +8,8 @@ public class Bank {
     public Bank(String bankName) {
         setName(bankName);
         Logger.write("New bank " + bankName + " was created");
+        Logger.show();
+        
     }
 
     public String getName() {
