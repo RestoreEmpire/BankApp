@@ -1,7 +1,7 @@
-package persons.clients;
+package application;
 
 import data.processing.generators.ClientIdGenerator;
-import persons.Person;
+import logging.Logger;
 
 public class Client extends Person {
 
@@ -11,6 +11,7 @@ public class Client extends Person {
     public Client(String firstName, String surname, String middlename, String birthDate) {
         setAllInfo(firstName, surname, middlename, birthDate);
         setId();
+        Logger.write("New client was created with name " + getFullName());
     }
 
     public void setId() {

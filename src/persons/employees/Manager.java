@@ -2,9 +2,8 @@ package persons.employees;
 
 import java.util.HashMap;
 
-import accounts.Account;
-import persons.Person;
-import persons.clients.Client;
+import application.Client;
+import application.Person;
 
 public class Manager extends Person implements Employee{
 
@@ -12,9 +11,9 @@ public class Manager extends Person implements Employee{
         return new Client(firstName, surname, middlename, birthDate);
     }
     
-    public Account registerNewAccount(Client client) {
-        return new Account(client);
-    }
+    // public Account registerNewAccount(Client client) {
+    //     return new Account(client);
+    // }
 
     @Override
     public String checkClientInfo(Client client) {

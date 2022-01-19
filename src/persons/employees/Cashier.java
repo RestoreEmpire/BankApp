@@ -1,7 +1,7 @@
 package persons.employees;
 
-import persons.Person;
-import persons.clients.Client;
+import application.Client;
+import application.Person;
 
 public class Cashier extends Person implements Employee {
 

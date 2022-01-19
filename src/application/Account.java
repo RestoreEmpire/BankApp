@@ -1,24 +1,43 @@
-package accounts;
+package application;
 
 import java.math.BigDecimal;
 
 import data.processing.DataValidation;
 import data.processing.generators.AccountNumberGenerator;
-import persons.clients.Client;
+import logging.Logger;
 
 public class Account {
 
     private String accountNumber;
     private Client client;
+    private Bank bank;
     private BigDecimal funds = BigDecimal.ZERO;
 
-    public Account(Client client) {
+    public Account(Client client, Bank bank) {
         this.client = client;
+        this.bank = bank;
         accountNumber = new AccountNumberGenerator().generate();
+        Logger.write("New account created with account number: " + accountNumber);
     }
 
-    public Account(Client client, long startingDeposit) {
-        this(client);
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public Bank getBank() {
+        return bank;
+    }
+
+    public void setBank(Bank bank) {
+        this.bank = bank;
+    }
+
+    public Account(Client client, Bank bank, long startingDeposit) {
+        this(client, bank);
         this.funds = BigDecimal.valueOf(startingDeposit);
     }
 
