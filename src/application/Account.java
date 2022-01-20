@@ -2,11 +2,12 @@ package application;
 
 import java.math.BigDecimal;
 
-import data.processing.DataValidation;
-import data.processing.generators.AccountNumberGenerator;
 import logging.Logger;
+import logging.Logger.Status;
+import processing.data.generators.AccountNumberGenerator;
+import processing.data.validators.DataValidation;
 
-public class Account {
+public class Account implements Model{
 
     private String accountNumber;
     private Client client;
@@ -17,7 +18,7 @@ public class Account {
         this.client = client;
         this.bank = bank;
         accountNumber = new AccountNumberGenerator().generate();
-        Logger.write("New account created with account number: " + accountNumber);
+        Logger.write("New account created with account number: " + accountNumber, Status.OK);
     }
 
     public Client getClient() {
@@ -57,17 +58,30 @@ public class Account {
         BigDecimal currentTransfer = new BigDecimal(transferSum.toString());
         if (currentTransfer.compareTo(BigDecimal.ZERO) > 0)
             setFunds(getFunds().add(currentTransfer));
-        else
-            System.err.println("Amount of the transferred money should be more than 0");
+        else {
+            String mes = "Amount of the transferred money should be more than 0";
+            System.err.println(mes);
+            Logger.write(mes, Status.ERROR);
+        }
     }   
     
-    public <T extends Number> void withdrawFunds(Account account, T transferSum) {
+    public <T extends Number> void withdrawFunds(T transferSum) {
         BigDecimal currentTransfer = new BigDecimal(transferSum.toString());
-        if (currentTransfer.compareTo(BigDecimal.ZERO) > 0)
-            account.setFunds(account.getFunds().subtract(currentTransfer));
-        else
-            System.err.println("Amount of the withdrawn money should be more than 0");
+        if (currentTransfer.compareTo(getFunds()) < 0)
+            setFunds(getFunds().subtract(currentTransfer));
+        else {
+            String mes = "Amount of the withdrawn money should be more than 0";
+            System.err.println(mes);
+            Logger.write(mes, Status.ERROR);
+        }
+        
     }  
+
+    @Override
+    public void create() {
+        // TODO Auto-generated method stub
+        
+    }
     
     @Override
     public String toString() {

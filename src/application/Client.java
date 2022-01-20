@@ -1,17 +1,17 @@
 package application;
 
-import data.processing.generators.ClientIdGenerator;
 import logging.Logger;
+import logging.Logger.Status;
+import processing.data.generators.ClientIdGenerator;
 
-public class Client extends Person {
+public class Client extends Person implements Model {
 
-    // TODO: больше информации о клиенте
     private String id;
 
     public Client(String firstName, String surname, String middlename, String birthDate) {
         setAllInfo(firstName, surname, middlename, birthDate);
         setId();
-        Logger.write("New client was created with name " + getFullName());
+        Logger.write("New client was created with name " + getFullName(), Status.OK);
     }
 
     public void setId() {
@@ -23,10 +23,11 @@ public class Client extends Person {
     }
 
     @Override
-    public String toString() {
-        return  "ID: " + id + '\n' +
-                "Name: " + getFullName() + '\n' +
-                "Birth Date: " + getBirthDate();
+    public void create() {
+        // TODO Auto-generated method stub
+        
     }
+
+    
 }
 

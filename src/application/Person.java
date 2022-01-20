@@ -3,7 +3,8 @@ package application;
 import java.time.LocalDate;
 import java.util.HashMap;
 
-import data.processing.DataValidation;
+import processing.data.validators.DataValidation;
+import processing.data.validators.DataValidation.nameType;
 
 public abstract class Person {
 
@@ -17,15 +18,15 @@ public abstract class Person {
     }
 
     public void setFirstName(String name) {
-        this.firstName = DataValidation.validateName(name) ? name : firstName;
+        this.firstName = DataValidation.validateName(name, nameType.FIRST) ? name : firstName;
     }
 
     public void setSurname(String surname) {
-        this.surname = DataValidation.validateName(surname) ? surname : this.surname; 
+        this.surname = DataValidation.validateName(surname,  nameType.LAST) ? surname : this.surname; 
     }
   
     public void setMiddlename(String middlename) {
-        this.middlename = DataValidation.validateName(middlename) ? middlename : this.middlename; 
+        this.middlename = DataValidation.validateName(middlename, nameType.MIDDLE) ? middlename : this.middlename; 
     }
 
     public void setBirthDate(String birthDate) {
@@ -50,6 +51,13 @@ public abstract class Person {
     public void setAllInfo(HashMap<String, String> dict){
 
         // TODO: сделать реализацию этого метода через словарь
+    }
+
+    
+
+    @Override
+    public String toString() {   
+        return getFullName();
     }
 
 }

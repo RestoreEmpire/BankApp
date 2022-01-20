@@ -1,4 +1,6 @@
+import application.Account;
 import application.Bank;
+import application.Client;
 
 public class App {
 // банк
@@ -7,7 +9,6 @@ public class App {
 
     public static void main(String[] args) throws Exception {
         Bank bank = new Bank("Tinkoff");
-        
-        
+        bank.create();
     }
 }   

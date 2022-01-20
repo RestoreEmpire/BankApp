@@ -1,4 +1,4 @@
-package data.processing.generators;
+package processing.data.generators;
 
 public class AccountNumberGenerator extends DataGenerator {
     // TODO: промозговать

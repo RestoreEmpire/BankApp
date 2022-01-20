@@ -10,6 +10,18 @@ import java.util.Scanner;
 
 public class Logger {
 
+    public enum Status{OK,ERROR};
+
+    private static String logStatus(Status st){
+        String status = switch (st) {
+            case OK -> "OK!";
+            case ERROR -> "ERROR!";
+            default -> "UNKNOWN";
+        };
+        return status;
+
+    }
+
     static String filePath = "./log.txt";
 
     public static void changeLoggingFilePath(String path){
@@ -29,11 +41,12 @@ public class Logger {
         }
     }
 
-    public static void write(String string){
+    public static void write(String string, Status status) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("hh:mm:ss dd-MM-yyyy");
         LocalDateTime dateTime = LocalDateTime.now();
         String formattedDate = dateTime.format(dtf);
-        StringBuilder sb = new StringBuilder(String.format("[%s] ", formattedDate));
+        StringBuilder sb = new StringBuilder(String.format("%s ", logStatus(status)));
+        sb.append(String.format("[%s] ", formattedDate));
         sb.append(string);
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, StandardCharsets.UTF_8, true))) {
             bw.append(sb.toString());

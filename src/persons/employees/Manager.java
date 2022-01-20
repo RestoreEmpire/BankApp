@@ -22,6 +22,6 @@ public class Manager extends Person implements Employee{
     }
 
     public void changeClientInfo(Client client, HashMap<String, String> info) {
-        // TODO: функциональность
+
     }
 }

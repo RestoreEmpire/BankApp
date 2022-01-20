@@ -1,1 +1,17 @@
-[09:24:02 19-01-2022] New bank Tinkoff was created
+OK! [12:43:40 20-01-2022] New bank Tinkoff was created
+ERROR! [03:57:36 20-01-2022] Wrong id length or type
+OK! [04:09:59 20-01-2022] New bank Tinkoff was created
+OK! [04:09:59 20-01-2022] New client was created with name Игорь Игорев Игоревич
+OK! [07:07:11 20-01-2022] New bank "Tinkoff" was created
+OK! [07:09:21 20-01-2022] New bank "Tinkoff" was created
+OK! [07:10:51 20-01-2022] New bank "Tinkoff" was created
+OK! [07:12:20 20-01-2022] New bank "Tinkoff" was created
+OK! [07:12:59 20-01-2022] New bank "Tinkoff" was created
+OK! [07:14:05 20-01-2022] New bank "Tinkoff" was created
+OK! [07:22:33 20-01-2022] New bank "Tinkoff" was created
+OK! [07:26:27 20-01-2022] New bank "Tinkoff" was created
+OK! [07:27:35 20-01-2022] New bank "Tinkoff" was created
+OK! [07:28:47 20-01-2022] New bank "Tinkoff" was created
+OK! [07:29:48 20-01-2022] New bank "Tinkoff" was created
+OK! [07:29:59 20-01-2022] New bank "Tinkoff" was created
+OK! [07:31:55 20-01-2022] New bank "Tinkoff" was created

@@ -1,4 +1,4 @@
-package data.processing.generators;
+package processing.data.generators;
 
 abstract class DataGenerator {
 
@@ -7,7 +7,7 @@ abstract class DataGenerator {
      * @param len length of the sequence of random digits
      * @return {@code StringBuilder}
      */
-    protected StringBuilder buildRandomDigits(int len) {
+    protected static StringBuilder buildRandomDigits(int len) {
         StringBuilder generatedClientId = new StringBuilder();
         for(int i = 0; i < len; i++){
             generatedClientId.append((int) (Math.random() * 10));
