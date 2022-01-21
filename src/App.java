@@ -1,6 +1,6 @@
-import application.Account;
-import application.Bank;
-import application.Client;
+import java.math.BigDecimal;
+
+
 
 public class App {
 // банк
@@ -8,7 +8,8 @@ public class App {
 // клиенты
 
     public static void main(String[] args) throws Exception {
-        Bank bank = new Bank("Tinkoff");
-        bank.create();
+        BigDecimal bd = new BigDecimal("12.12");
+        String s = String.format(bd.toString());
+        System.out.println(s);
     }
 }   

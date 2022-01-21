@@ -1,6 +1,6 @@
 package persons.employees;
 
-import application.Client;
+import model.Client;
 
 // Лучше в абстрактный класс
 public interface Employee {

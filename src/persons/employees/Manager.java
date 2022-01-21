@@ -2,8 +2,8 @@ package persons.employees;
 
 import java.util.HashMap;
 
-import application.Client;
-import application.Person;
+import model.Client;
+import model.Person;
 
 public class Manager extends Person implements Employee{
 
