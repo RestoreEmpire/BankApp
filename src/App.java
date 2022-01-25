@@ -1,15 +1,32 @@
-import java.math.BigDecimal;
-
-
+import java.util.Scanner;
 
 public class App {
-// банк
-// расчётные счета
-// клиенты
 
     public static void main(String[] args) throws Exception {
-        BigDecimal bd = new BigDecimal("12.12");
-        String s = String.format(bd.toString());
-        System.out.println(s);
+        // try (Scanner in = new Scanner(System.in)) {
+        //     while(true){
+        //     String s = in.nextLine();
+        //     s = s.strip();
+        //     switch (s) {
+        //         case "create":
+        //             System.out.println("created");
+        //             break;
+        //         case "read":
+        //             System.out.println("readed");
+        //             break;
+        //         case "update":
+        //             System.out.println("updated");
+        //             break;
+        //         case "delete":
+        //             System.out.println("deleted");
+        //             break;
+        //         default:
+        //             break;
+        //     }
+        //     }
+        // } catch (Exception e) {
+        //     e.printStackTrace();
+
+        // }
     }
 }   

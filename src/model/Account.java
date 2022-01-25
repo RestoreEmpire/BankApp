@@ -15,31 +15,42 @@ public class Account implements Model<Account>{
     private Bank bank;
     private Client client;
     private BigDecimal funds = BigDecimal.ZERO;
-    private Parser parser = null;
+    private Parser parser = new Parser("Account");
+    private String id;
 
     public Account(){
 
     }
 
-    public Account(Client client, Bank bank) {
-        this.client = client;
-        this.bank = bank;
+    public Account(String id, Bank bank,Client client) {
+        setClient(client);
+        setBank(bank);
+        setId(id);
         accountNumber = new AccountNumberGenerator().generate();
         
     }
     
-    public Account(Client client, Bank bank, long startingDeposit) {
-        this(client, bank);
-        this.funds = BigDecimal.valueOf(startingDeposit);
+    public Account(Client client, Bank bank, String id, long startingDeposit) {
+        this(id, bank, client);
+        setFunds(BigDecimal.valueOf(startingDeposit));
     }
 
-    public Account(String accountNumber, Bank bank, Client client, BigDecimal funds){
-        this.client = client;
-        this.bank = bank;
+    public Account(String id, String accountNumber, Bank bank, Client client, BigDecimal funds){
+        setClient(client);
+        setBank(bank);
         setAccountNumber(accountNumber);
         setFunds(funds);
+        setId(id);
+        // ID, ACCOUNT_NUMBER, BANK_ID, CLIENT_ID, FUNDS
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public Client getClient() {
         return client;
@@ -65,6 +76,10 @@ public class Account implements Model<Account>{
         this.funds = DataValidation.validateAccountFunds(funds) ? funds : this.funds;
     }
 
+    private void setFunds(String funds) {
+        BigDecimal bd = new BigDecimal(funds);
+        setFunds(bd);
+    }
     public String getAccountNumber(){
         return accountNumber;
     }
@@ -99,9 +114,10 @@ public class Account implements Model<Account>{
     @Override
     public void create() {
         parser.writeToEnd(
+            getId(),
             getAccountNumber(),
-            getBank().toString(),
-            getClient().toString(),
+            getBank().getId(),
+            getClient().getId(),
             getFunds().toString()
         );
         Logger.write("New account created with account number: " + accountNumber, Status.OK);
@@ -114,23 +130,39 @@ public class Account implements Model<Account>{
     }
 
     @Override
-    public Account read(int rowIndex) {
-        // TODO: реализавать связи
-        // ArrayList<String> row = parser.getRow(rowIndex);
-        Account account = new Account();
-        return account;
+    public void read(String id) {
+        ArrayList<String> row = parser.getRowById(id);
+        Parser bankParser = new Parser("Bank");
+        Parser clientParser = new Parser("Client");
+        ArrayList<String> b = bankParser.getRowById(row.get(2));
+        ArrayList<String> c = clientParser.getRowById(row.get(3));
+        setId(row.get(0));
+        setAccountNumber(row.get(1));
+        setBank(new Bank(b.get(0), b.get(1)));
+        setClient(new Client(c.get(0), c.get(1), c.get(2), c.get(3), c.get(4)));
+        setFunds(row.get(4));
+        // ID, SURNAME, FIRST_NAME, MIDDLE_NAME, BIRTH_DATE
+        // ID, NAME
+        // ID, ACCOUNT_NUMBER, BANK_ID, CLIENT_ID, FUNDS
+        
     }
 
     @Override
-    public void update(Account object) {
-        // TODO Auto-generated method stub
-        
+    public void update(Account account) {
+        parser.changeRow(search(), 
+            account.getId(), 
+            account.getAccountNumber(),
+            account.getBank().getId(),
+            account.getClient().getId(),
+            account.getFunds().toString()
+            );
+        // ID, ACCOUNT_NUMBER, BANK_ID, CLIENT_ID, FUNDS
     }
 
     @Override
     public int search() {
         try { // TODO: засунуть в валидацию
-            int result = parser.containedRow(            
+            int result = parser.inTable(            
                 getAccountNumber(), 
                 getBank().toString(),
                 getClient().toString(), 

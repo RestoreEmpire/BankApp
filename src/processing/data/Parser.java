@@ -21,12 +21,14 @@ public class Parser {
     public Parser(String dbName){
         setDbName(dbName);
         setFilePath();
+        updateTable();
     }
 
     public Parser(String path, String dbName) {
         setPath(path);
         setDbName(dbName);
         setFilePath();
+        updateTable();
     }
 
     public String getPath() {
@@ -52,7 +54,13 @@ public class Parser {
         updateTable();
     }
 
-    public int containedRow(String... row) {
+
+    /**
+     * Возвращает номер строки, если находит полностью совпадающую строку.
+     * Если такой строки нет, возвращает -1.
+     * @param strings поля обх
+     */
+    public int inTable(String... row) {
         for (int i = 1; i < table.size(); i++) {
             var tableRow = table.get(i);
             if (Arrays.compare(tableRow.toArray(new String[]{}), row) == 0)
@@ -68,6 +76,15 @@ public class Parser {
 
     public ArrayList<String> getRow(int rowIndex){
         return table.get(rowIndex + 1);
+    }
+
+    public ArrayList<String> getRowById (String id){
+        for(int i = 1; i < table.size(); i++){
+            ArrayList<String> row = table.get(i);
+            if (row.get(0).equals(id))
+                return row;
+        }
+        return null;
     }
 
     public void changeRow(int rowIndex, String... row){
@@ -103,10 +120,12 @@ public class Parser {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < table.size(); i++) {
             var row = table.get(i);
-            for (int j = 0; j < row.size(); j++) {
-                sb.append(table.get(i));
+            for (int j = 0; j < row.size() - 1; j++) {
+                sb.append(row.get(j) + ", ");
             }
-            sb.append("\n");
+            sb.append(row.get(row.size() - 1));
+            if (i != table.size() - 1)
+                sb.append("\n");
         }
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, StandardCharsets.UTF_8))) {
             bw.write(sb.toString());

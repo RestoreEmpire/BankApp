@@ -12,6 +12,10 @@ public class Client extends Person implements Model<Client> {
     private String id;
     private Parser parser = new Parser("Client");
 
+    public Client(){
+
+    }
+
     public Client(String id, String surname, String firstName, String middlename, String birthDate) {
         setAllInfo(firstName, surname, middlename, birthDate);
         setId(id);
@@ -52,22 +56,18 @@ public class Client extends Person implements Model<Client> {
     }
 
     @Override
-    public Client read(int rowIndex) {
-        ArrayList<String> row = parser.getRow(rowIndex);
-        Client client = new Client(
-            row.get(0),
-            row.get(1), 
-            row.get(2), 
-            row.get(3), 
-            row.get(4)
-        );
-        return client;
+    public void read(String id) {
+        ArrayList<String> row = parser.getRowById(id);
+        setId(row.get(0));
+        setSurname(row.get(1));
+        setFirstName(row.get(2));
+        setMiddlename(row.get(3));
+        setBirthDate(row.get(4));
     }
 
     @Override
     public void update(Client client) {
         parser.changeRow(search(), 
-        client.getId(), 
         client.getId(), 
         client.getSurname(), 
         client.getFirstName(), 
@@ -80,7 +80,7 @@ public class Client extends Person implements Model<Client> {
     @Override
     public int search() {
         try { // TODO: засунуть в валидацию
-            int result = parser.containedRow(            
+            int result = parser.inTable(            
                 String.valueOf(id), 
                 getSurname(), 
                 getFirstName(), 

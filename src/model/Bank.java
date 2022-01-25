@@ -8,8 +8,7 @@ import processing.data.Parser;
 
 public class Bank implements Model<Bank> {
     private String name;
-    private int id;
-    private static int idCounter = 1; // TODO: заменить
+    private String id;
     private Parser parser = new Parser("Bank");
 
     public Bank(){
@@ -18,21 +17,20 @@ public class Bank implements Model<Bank> {
 
     public Bank(String bankName) {
         setName(bankName);
-        setId(idCounter++);
         Logger.write("New bank \"" + bankName + "\" was created", Status.OK);
     }
 
-    public Bank(int id, String bankName){
-        setName(name);
+    public Bank(String id, String bankName){
+        setName(bankName);
         setId(id);
         Logger.write("New bank \"" + bankName + "\" was created", Status.OK);
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -46,12 +44,12 @@ public class Bank implements Model<Bank> {
 
     @Override
     public void create() {
-        parser.writeToEnd(String.valueOf(getId()), getName());
+        parser.writeToEnd(getId(), getName());
     }
     
     public int search() {
         try { // TODO: засунуть в валидацию
-            int result = parser.containedRow(String.valueOf(getId()), getName());
+            int result = parser.inTable(String.valueOf(getId()), getName());
             if (result < 0) throw new Exception("Row not found");
             return result;
         } catch (Exception e){
@@ -60,15 +58,16 @@ public class Bank implements Model<Bank> {
     }
 
     @Override
-    public Bank read(int rowIndex) {
-        ArrayList<String> row = parser.getRow(rowIndex);
-        Bank bank = new Bank(Integer.parseInt(row.get(0)), row.get(1));
-        return bank;
+    public void read(String id) {
+        ArrayList<String> row = parser.getRowById(id);
+        setId(row.get(0));
+        setName(row.get(1));
+        // ID, NAME
     }
     
     @Override
     public void update(Bank bank) {
-        parser.changeRow(search(), Integer.toString(bank.getId()), bank.getName());
+        parser.changeRow(search(), bank.getId(), bank.getName());
     }
 
     @Override
