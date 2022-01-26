@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
+import exceptions.RowNotFoundInTableException;
 import logging.Logger;
 import logging.Logger.Status;
 import processing.data.Parser;
@@ -50,10 +51,11 @@ public class Bank implements Model<Bank> {
     public int search() {
         try { // TODO: засунуть в валидацию
             int result = parser.inTable(String.valueOf(getId()), getName());
-            if (result < 0) throw new Exception("Row not found");
+            if (result < 0) throw new RowNotFoundInTableException("Row not found");
             return result;
         } catch (Exception e){
-            return 0;
+            e.getMessage();
+            return -1;
         }
     }
 

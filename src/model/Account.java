@@ -3,6 +3,7 @@ package model;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
+import exceptions.RowNotFoundInTableException;
 import logging.Logger;
 import logging.Logger.Status;
 import processing.data.Parser;
@@ -132,6 +133,7 @@ public class Account implements Model<Account>{
     @Override
     public void read(String id) {
         ArrayList<String> row = parser.getRowById(id);
+        setId(row.get(0));
         Parser bankParser = new Parser("Bank");
         Parser clientParser = new Parser("Client");
         ArrayList<String> b = bankParser.getRowById(row.get(2));
@@ -168,10 +170,11 @@ public class Account implements Model<Account>{
                 getClient().toString(), 
                 getFunds().toString()
                 );
-            if (result < 0) throw new Exception("Row not found");
+            if (result < 0) throw new RowNotFoundInTableException("Row not found");
             return result;
         } catch (Exception e){
-            return 0;
+            e.getMessage();
+            return -1;
         }
     }
 

@@ -33,3 +33,11 @@ OK! [02:26:35 25-01-2022] New bank "Tinkoff" was created
 OK! [02:26:35 25-01-2022] New bank "Sber" was created
 OK! [02:31:01 25-01-2022] New bank "Tinkoff" was created
 OK! [02:31:01 25-01-2022] New bank "Sber" was created
+ERROR! [04:44:55 25-01-2022] Number of elements not equals for number of titles
+ERROR! [04:44:55 25-01-2022] Number of elements not equals for number of titles
+ERROR! [04:52:39 25-01-2022] Number of elements not equals for number of titles
+ERROR! [04:52:39 25-01-2022] Number of elements not equals for number of titles
+ERROR! [04:53:26 25-01-2022] Number of elements not equals for number of titles
+ERROR! [04:53:26 25-01-2022] Number of elements not equals for number of titles
+ERROR! [04:55:26 25-01-2022] Number of elements not equals for number of titles
+ERROR! [04:55:26 25-01-2022] Number of elements not equals for number of titles

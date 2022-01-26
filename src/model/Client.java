@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
+import exceptions.RowNotFoundInTableException;
 import logging.Logger;
 import logging.Logger.Status;
 import processing.data.Parser;
@@ -15,15 +16,16 @@ public class Client extends Person implements Model<Client> {
     public Client(){
 
     }
+    
+    public Client(String surname, String firstName, String middlename, String birthDate) {
+        setAllInfo(firstName, surname, middlename, birthDate);
+        setRandId();
+    }
 
     public Client(String id, String surname, String firstName, String middlename, String birthDate) {
         setAllInfo(firstName, surname, middlename, birthDate);
         setId(id);
         
-    }
-    public Client(String firstName, String surname, String middlename, String birthDate) {
-        setAllInfo(firstName, surname, middlename, birthDate);
-        setRandId();
     }
 
     public void setId(String id){
@@ -81,16 +83,17 @@ public class Client extends Person implements Model<Client> {
     public int search() {
         try { // TODO: засунуть в валидацию
             int result = parser.inTable(            
-                String.valueOf(id), 
+                getId(), 
                 getSurname(), 
                 getFirstName(), 
                 getMiddlename(), 
                 getBirthDate()
                 );
-            if (result < 0) throw new Exception("Row not found");
+            if (result < 0) throw new RowNotFoundInTableException("Row not found");
             return result;
-        } catch (Exception e){
-            return 0;
+        } catch (RuntimeException e){
+            e.getMessage();
+            return -1;
         }
     }
 

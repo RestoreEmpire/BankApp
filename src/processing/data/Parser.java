@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.Scanner;
 
 import exceptions.CSVParserException;
+import exceptions.RowNotFoundInTableException;
 import logging.Logger;
 
 public class Parser {
@@ -79,12 +80,18 @@ public class Parser {
     }
 
     public ArrayList<String> getRowById (String id){
-        for(int i = 1; i < table.size(); i++){
-            ArrayList<String> row = table.get(i);
-            if (row.get(0).equals(id))
-                return row;
+        try{
+            for(int i = 1; i < table.size(); i++){
+                ArrayList<String> row = table.get(i);
+                if (row.get(0).equals(id))
+                    return row;
+            }
+            throw new RowNotFoundInTableException("Row with id: " + id + " was not found" );
+        } catch(Exception e){
+            e.printStackTrace();
+            return null;
+        
         }
-        return null;
     }
 
     public void changeRow(int rowIndex, String... row){
