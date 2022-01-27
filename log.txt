@@ -41,3 +41,11 @@ ERROR! [04:53:26 25-01-2022] Number of elements not equals for number of titles
 ERROR! [04:53:26 25-01-2022] Number of elements not equals for number of titles
 ERROR! [04:55:26 25-01-2022] Number of elements not equals for number of titles
 ERROR! [04:55:26 25-01-2022] Number of elements not equals for number of titles
+OK! [05:52:41 27-01-2022] New bank "Tinkoff" was created
+OK! [06:58:36 27-01-2022] New bank "Tinkoff" was created
+OK! [07:00:16 27-01-2022] New bank "Tinkoff" was created
+OK! [07:00:44 27-01-2022] New bank "Tinkoff" was created
+OK! [07:35:24 27-01-2022] New bank "Tinkoff" was created
+OK! [07:35:50 27-01-2022] New bank "Tinkoff" was created
+OK! [07:42:18 27-01-2022] New bank "Tinkoff" was created
+OK! [07:51:07 27-01-2022] New bank "Tinkoff" was created

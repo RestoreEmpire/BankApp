@@ -6,7 +6,7 @@ import java.util.HashMap;
 import com.restoreempire.processing.data.validators.DataValidation;
 import com.restoreempire.processing.data.validators.DataValidation.nameType;
 
-public abstract class Person {
+public abstract class Person<T> extends Model<T> {
 
     private String firstName;
     private String surname;
@@ -45,12 +45,12 @@ public abstract class Person {
         this.birthDate = LocalDate.parse(birthDate);
     }
 
-    public String getBirthDate() {
-        return birthDate.toString();
+    public LocalDate getBirthDate() {
+        return birthDate;
     }
 
     public String getFullName() {
-        return firstName + " " + surname + " " + middlename;
+        return String.format("%s %s %s", getSurname(), getFirstName(), getMiddlename());
     }
 
 
@@ -67,11 +67,12 @@ public abstract class Person {
         // TODO: сделать реализацию этого метода через словарь
     }
 
-    
+
 
     @Override
     public String toString() {   
         return getFullName();
     }
+
 
 }

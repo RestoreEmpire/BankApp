@@ -1,16 +1,17 @@
 package com.restoreempire.model;
 
-import java.util.ArrayList;
+import java.sql.ResultSet;
 
-import com.restoreempire.exceptions.RowNotFoundInTableException;
+import java.util.HashMap;
+
+
 import com.restoreempire.logging.Logger;
 import com.restoreempire.logging.Logger.Status;
-import com.restoreempire.processing.data.Parser;
 
-public class Bank implements Model<Bank> {
+public class Bank extends Model<Bank> {
     private String name;
-    private String id;
-    private Parser parser = new Parser("Bank");
+    private int id;
+    private final String tableName = "bank";
 
     public Bank(){
 
@@ -21,17 +22,17 @@ public class Bank implements Model<Bank> {
         Logger.write("New bank \"" + bankName + "\" was created", Status.OK);
     }
 
-    public Bank(String id, String bankName){
+    public Bank(int id, String bankName){
         setName(bankName);
         setId(id);
         Logger.write("New bank \"" + bankName + "\" was created", Status.OK);
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -43,38 +44,39 @@ public class Bank implements Model<Bank> {
         this.name = name;
     }
 
-    @Override
-    public void create() {
-        parser.writeToEnd(getId(), getName());
-    }
-    
-    public int search() {
-        try { // TODO: засунуть в валидацию
-            int result = parser.inTable(String.valueOf(getId()), getName());
-            if (result < 0) throw new RowNotFoundInTableException("Row not found");
-            return result;
-        } catch (Exception e){
-            e.getMessage();
-            return -1;
-        }
+    protected HashMap<String, Object> serialized(){
+
+        var map = new HashMap<String, Object>();
+        if (getId() != 0)
+            map.put("id", String.valueOf(getId()));
+        map.put("name", getName());
+        return map;
     }
 
     @Override
-    public void read(String id) {
-        ArrayList<String> row = parser.getRowById(id);
-        setId(row.get(0));
-        setName(row.get(1));
-        // ID, NAME
+    public void create() {
+        insert(tableName, serialized());
     }
-    
+
+    @Override
+    public void read(int id) {
+        try(ResultSet rs = select(tableName,id)){
+            setId(rs.getInt("id"));
+            setName(rs.getString("name"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
     @Override
     public void update(Bank bank) {
-        parser.changeRow(search(), bank.getId(), bank.getName());
+        dbUpdate(tableName, getId(), bank.serialized());
     }
 
     @Override
     public void delete() {
-        parser.removeRow(search());
+        dbDelete(tableName, getId());
     }
 
     @Override

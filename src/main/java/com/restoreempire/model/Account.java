@@ -1,28 +1,27 @@
 package com.restoreempire.model;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.sql.ResultSet;
+import java.util.HashMap;
 
-import com.restoreempire.exceptions.RowNotFoundInTableException;
 import com.restoreempire.logging.Logger;
-import com.restoreempire.processing.data.Parser;
 import com.restoreempire.processing.data.generators.AccountNumberGenerator;
 import com.restoreempire.processing.data.validators.DataValidation;
 
-public class Account implements Model<Account>{
+public class Account extends Model<Account>{
 
     private String accountNumber;
     private Bank bank;
     private Client client;
     private BigDecimal funds = BigDecimal.ZERO;
-    private Parser parser = new Parser("Account");
-    private String id;
+    private int id;
+    private final String tableName = "account";
 
     public Account(){
 
     }
 
-    public Account(String id, Bank bank,Client client) {
+    public Account(int id, Bank bank,Client client) {
         setClient(client);
         setBank(bank);
         setId(id);
@@ -30,12 +29,12 @@ public class Account implements Model<Account>{
         
     }
     
-    public Account(Client client, Bank bank, String id, long startingDeposit) {
+    public Account(Client client, Bank bank, int id, long startingDeposit) {
         this(id, bank, client);
         setFunds(BigDecimal.valueOf(startingDeposit));
     }
 
-    public Account(String id, String accountNumber, Bank bank, Client client, BigDecimal funds){
+    public Account(int id, String accountNumber, Bank bank, Client client, BigDecimal funds){
         setClient(client);
         setBank(bank);
         setAccountNumber(accountNumber);
@@ -44,11 +43,11 @@ public class Account implements Model<Account>{
         // ID, ACCOUNT_NUMBER, BANK_ID, CLIENT_ID, FUNDS
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -109,72 +108,52 @@ public class Account implements Model<Account>{
             Logger.write(mes, Logger.Status.ERROR);
         }
         
-    }  
+    }
+
+    @Override
+    protected HashMap<String, Object> serialized() {
+        var map = new HashMap<String, Object>();
+        if(getId() != 0)
+            map.put("id", getId());
+        map.put("account_number", getAccountNumber());
+        map.put("bank_id", bank.getId());
+        map.put("client_id", client.getId());
+        map.put("funds", getFunds());
+        return map;
+    }
 
     @Override
     public void create() {
-        parser.writeToEnd(
-            getId(),
-            getAccountNumber(),
-            getBank().getId(),
-            getClient().getId(),
-            getFunds().toString()
-        );
-        Logger.write("New account created with account number: " + accountNumber, Logger.Status.OK);
+        insert(tableName, serialized());
     }
 
     @Override
-    public void delete() {
-        parser.removeRow(search());
-        
-    }
+    public void read(int id) {
+        try (ResultSet rs = select(tableName, id)) {
+            if (rs.next()){
+                setId(rs.getInt("id"));
+                setAccountNumber(rs.getString("account_number"));
+                bank.read(rs.getInt("bank_id"));
+                client.read(rs.getInt("client_id"));
+                setFunds(rs.getBigDecimal("funds"));
+            }
+            else
+                throw new Exception("Row not found");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-    @Override
-    public void read(String id) {
-        ArrayList<String> row = parser.getRowById(id);
-        setId(row.get(0));
-        Parser bankParser = new Parser("Bank");
-        Parser clientParser = new Parser("Client");
-        ArrayList<String> b = bankParser.getRowById(row.get(2));
-        ArrayList<String> c = clientParser.getRowById(row.get(3));
-        setId(row.get(0));
-        setAccountNumber(row.get(1));
-        setBank(new Bank(b.get(0), b.get(1)));
-        setClient(new Client(c.get(0), c.get(1), c.get(2), c.get(3), c.get(4)));
-        setFunds(row.get(4));
-        // ID, SURNAME, FIRST_NAME, MIDDLE_NAME, BIRTH_DATE
-        // ID, NAME
-        // ID, ACCOUNT_NUMBER, BANK_ID, CLIENT_ID, FUNDS
-        
     }
 
     @Override
     public void update(Account account) {
-        parser.changeRow(search(), 
-            account.getId(), 
-            account.getAccountNumber(),
-            account.getBank().getId(),
-            account.getClient().getId(),
-            account.getFunds().toString()
-            );
-        // ID, ACCOUNT_NUMBER, BANK_ID, CLIENT_ID, FUNDS
+        dbUpdate(tableName, getId(), account.serialized());
     }
 
+
     @Override
-    public int search() {
-        try { // TODO: засунуть в валидацию
-            int result = parser.inTable(            
-                getAccountNumber(), 
-                getBank().toString(),
-                getClient().toString(), 
-                getFunds().toString()
-                );
-            if (result < 0) throw new RowNotFoundInTableException("Row not found");
-            return result;
-        } catch (Exception e){
-            e.getMessage();
-            return -1;
-        }
+    public void delete() {
+        dbDelete(tableName, getId());
     }
 
     @Override

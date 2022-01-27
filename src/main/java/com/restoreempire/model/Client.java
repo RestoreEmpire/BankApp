@@ -1,17 +1,16 @@
 package com.restoreempire.model;
 
-import java.util.ArrayList;
+import java.sql.ResultSet;
+import java.util.HashMap;
 
-import com.restoreempire.exceptions.RowNotFoundInTableException;
-import com.restoreempire.logging.Logger;
-import com.restoreempire.logging.Logger.Status;
-import com.restoreempire.processing.data.Parser;
+
 import com.restoreempire.processing.data.generators.ClientIdGenerator;
 
-public class Client extends Person implements Model<Client> {
+public class Client extends Person<Client> {
 
-    private String id;
-    private Parser parser = new Parser("Client");
+    private int id;
+    private String clientNumber;
+    private final String tableName = "client";
 
     public Client(){
 
@@ -19,84 +18,76 @@ public class Client extends Person implements Model<Client> {
     
     public Client(String surname, String firstName, String middlename, String birthDate) {
         setAllInfo(firstName, surname, middlename, birthDate);
-        setRandId();
+        setRandClientNumber();
     }
 
-    public Client(String id, String surname, String firstName, String middlename, String birthDate) {
+    public Client(int id, String surname, String firstName, String middlename, String birthDate, String clientNumber) {
         setAllInfo(firstName, surname, middlename, birthDate);
         setId(id);
+        setClientNumber(clientNumber);
         
     }
 
-    public void setId(String id){
-        this.id = id;
-    }
-    public void setRandId() {
-        id = new ClientIdGenerator().generate();
+    public int getId() {
+        return id;
     }
 
-    public String getId() {
-        return id;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setClientNumber(String clientNumber){
+        this.clientNumber = clientNumber;
+    }
+    public void setRandClientNumber() {
+        clientNumber = new ClientIdGenerator().generate();
+    }
+
+    public String getClientNumber() {
+        return clientNumber;
+    }
+
+    @Override
+    protected HashMap<String,Object> serialized(){
+        var map = new HashMap<String, Object>();
+        if (getId() != 0)
+            map.put("id", String.valueOf(getId()));
+        map.put("client_number", getClientNumber());
+        map.put("surname", getSurname());
+        map.put("first_name", getFirstName());
+        map.put("middle_name", getMiddlename());
+        map.put("birthdate", getBirthDate());
+        return map;
+
     }
 
     @Override
     public void create() {
-        parser.writeToEnd(
-            getId(), 
-            getSurname(), 
-            getFirstName(), 
-            getMiddlename(), 
-            getBirthDate()
-        );
-        Logger.write("New client was created with name " + getFullName(), Status.OK); //change location
+        insert(tableName, serialized());
     }
 
     @Override
-    public void delete() {
-        parser.removeRow(search());
-        
-    }
-
-    @Override
-    public void read(String id) {
-        ArrayList<String> row = parser.getRowById(id);
-        setId(row.get(0));
-        setSurname(row.get(1));
-        setFirstName(row.get(2));
-        setMiddlename(row.get(3));
-        setBirthDate(row.get(4));
+    public void read(int id) {
+        try (ResultSet rs = select(tableName, id)) {
+            setId(rs.getInt("id"));
+            setClientNumber(rs.getString("client_number"));
+            setSurname(rs.getString("surname"));
+            setFirstName(rs.getString("first_name"));
+            setMiddlename(rs.getString("middle_name"));
+            setBirthDate(rs.getDate("birthdate").toLocalDate());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void update(Client client) {
-        parser.changeRow(search(), 
-        client.getId(), 
-        client.getSurname(), 
-        client.getFirstName(), 
-        client.getMiddlename(), 
-        client.getBirthDate()
-        );
-        
+        dbUpdate(tableName, getId(),client.serialized());
     }
 
     @Override
-    public int search() {
-        try { // TODO: засунуть в валидацию
-            int result = parser.inTable(            
-                getId(), 
-                getSurname(), 
-                getFirstName(), 
-                getMiddlename(), 
-                getBirthDate()
-                );
-            if (result < 0) throw new RowNotFoundInTableException("Row not found");
-            return result;
-        } catch (RuntimeException e){
-            e.getMessage();
-            return -1;
-        }
+    public void delete() {
+        dbDelete(tableName, getId());
     }
-
-
 }
 
