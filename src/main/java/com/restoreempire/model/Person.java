@@ -6,7 +6,7 @@ import java.util.HashMap;
 import com.restoreempire.processing.data.validators.DataValidation;
 import com.restoreempire.processing.data.validators.DataValidation.nameType;
 
-public abstract class Person<T> extends Model<T> {
+public abstract class Person extends BaseModel {
 
     private String firstName;
     private String surname;

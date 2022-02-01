@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 import com.restoreempire.processing.data.generators.ClientIdGenerator;
 
-public class Client extends Person<Client> {
+public class Client extends Person implements Model<Client> {
 
     private int id;
     private String clientNumber;
@@ -48,7 +48,7 @@ public class Client extends Person<Client> {
     }
 
     @Override
-    protected HashMap<String,Object> serialized(){
+    public HashMap<String,Object> serialized(){
         var map = new HashMap<String, Object>();
         if (getId() != 0)
             map.put("id", String.valueOf(getId()));

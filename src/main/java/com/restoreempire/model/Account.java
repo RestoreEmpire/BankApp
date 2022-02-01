@@ -8,7 +8,7 @@ import com.restoreempire.logging.Logger;
 import com.restoreempire.processing.data.generators.AccountNumberGenerator;
 import com.restoreempire.processing.data.validators.DataValidation;
 
-public class Account extends Model<Account>{
+public class Account extends BaseModel implements Model<Account> {
 
     private String accountNumber;
     private Bank bank;
@@ -111,7 +111,7 @@ public class Account extends Model<Account>{
     }
 
     @Override
-    protected HashMap<String, Object> serialized() {
+    public HashMap<String, Object> serialized() {
         var map = new HashMap<String, Object>();
         if(getId() != 0)
             map.put("id", getId());

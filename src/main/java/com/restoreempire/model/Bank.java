@@ -8,7 +8,7 @@ import java.util.HashMap;
 import com.restoreempire.logging.Logger;
 import com.restoreempire.logging.Logger.Status;
 
-public class Bank extends Model<Bank> {
+public class Bank extends BaseModel implements Model<Bank> {
     private String name;
     private int id;
     private final String tableName = "bank";
@@ -44,7 +44,7 @@ public class Bank extends Model<Bank> {
         this.name = name;
     }
 
-    protected HashMap<String, Object> serialized(){
+    public HashMap<String, Object> serialized(){
 
         var map = new HashMap<String, Object>();
         if (getId() != 0)
