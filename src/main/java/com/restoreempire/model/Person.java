@@ -6,7 +6,7 @@ import java.util.HashMap;
 import com.restoreempire.processing.data.validators.DataValidation;
 import com.restoreempire.processing.data.validators.DataValidation.nameType;
 
-public abstract class Person<T> extends Model<T> {
+public abstract class Person extends BaseModel {
 
     private String firstName;
     private String surname;
@@ -53,8 +53,6 @@ public abstract class Person<T> extends Model<T> {
         return String.format("%s %s %s", getSurname(), getFirstName(), getMiddlename());
     }
 
-
-
     public void setAllInfo(String firstName, String surname, String middlename, String birthDate) {
         setFirstName(firstName);
         setSurname(surname);
@@ -62,6 +60,12 @@ public abstract class Person<T> extends Model<T> {
         setBirthDate(birthDate);
     }
 
+    public void setAllInfo(String firstName, String surname, String middlename, LocalDate birthDate) {
+        setFirstName(firstName);
+        setSurname(surname);
+        setMiddlename(middlename);
+        setBirthDate(birthDate);
+    }
     public void setAllInfo(HashMap<String, String> dict){
 
         // TODO: сделать реализацию этого метода через словарь

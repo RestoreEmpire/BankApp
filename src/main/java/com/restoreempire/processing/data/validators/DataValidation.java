@@ -18,7 +18,6 @@ public class DataValidation {
             case FIRST -> "First name";
             case LAST -> "Last name";
             case MIDDLE -> "Middle name";
-            default -> "";
         };
         
         try {

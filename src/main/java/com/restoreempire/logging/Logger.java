@@ -10,15 +10,14 @@ import java.util.Scanner;
 
 public class Logger {
 
-    public enum Status{OK,ERROR};
+    public enum Status{OK,ERROR, WARNING};
 
     private static String logStatus(Status st){
-        String status = switch (st) {
+        return switch (st) {
             case OK -> "OK!";
             case ERROR -> "ERROR!";
-            default -> "UNKNOWN";
+            case WARNING -> "WARNING!";
         };
-        return status;
 
     }
 
@@ -37,6 +36,7 @@ public class Logger {
         return sb.toString();
         } catch (Exception e) {
             System.err.println(e.getMessage());
+
             return null;
         }
     }
@@ -52,7 +52,7 @@ public class Logger {
             bw.append(sb.toString());
             bw.newLine();
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 }

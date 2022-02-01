@@ -1,12 +1,13 @@
 package com.restoreempire.model;
 
 import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.util.HashMap;
 
 
 import com.restoreempire.processing.data.generators.ClientIdGenerator;
 
-public class Client extends Person<Client> {
+public class Client extends Person implements Model<Client> {
 
     private int id;
     private String clientNumber;
@@ -26,6 +27,12 @@ public class Client extends Person<Client> {
         setId(id);
         setClientNumber(clientNumber);
         
+    }
+    public Client(int id, String surname, String firstName, String middlename, LocalDate birthDate, String clientNumber) {
+        setAllInfo(firstName, surname, middlename, birthDate);
+        setId(id);
+        setClientNumber(clientNumber);
+
     }
 
     public int getId() {
@@ -48,7 +55,7 @@ public class Client extends Person<Client> {
     }
 
     @Override
-    protected HashMap<String,Object> serialized(){
+    public HashMap<String,Object> serialized(){
         var map = new HashMap<String, Object>();
         if (getId() != 0)
             map.put("id", String.valueOf(getId()));

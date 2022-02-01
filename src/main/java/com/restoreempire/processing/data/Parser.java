@@ -59,7 +59,7 @@ public class Parser {
     /**
      * Возвращает номер строки, если находит полностью совпадающую строку.
      * Если такой строки нет, возвращает -1.
-     * @param strings поля обх
+     * @param row поля
      */
     public int inTable(String... row) {
         for (int i = 1; i < table.size(); i++) {
@@ -128,7 +128,7 @@ public class Parser {
         for (int i = 0; i < table.size(); i++) {
             var row = table.get(i);
             for (int j = 0; j < row.size() - 1; j++) {
-                sb.append(row.get(j) + ", ");
+                sb.append(row.get(j)).append(", ");
             }
             sb.append(row.get(row.size() - 1));
             if (i != table.size() - 1)
@@ -145,7 +145,7 @@ public class Parser {
     public void writeToEnd(String... strings) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < strings.length - 1; i++) {
-            sb.append(strings[i] + ", ");
+            sb.append(strings[i]).append(", ");
         }
         sb.append(strings[strings.length - 1]);
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, StandardCharsets.UTF_8, true))) {
