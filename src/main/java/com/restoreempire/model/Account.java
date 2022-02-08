@@ -75,6 +75,10 @@ public class Account extends BaseModel<Account> {
         this.accountNumber = accountNumber;
     }
 
+    public void setRandomAccountNumber(){
+        setAccountNumber(new AccountNumberGenerator().generate());
+    }
+
     public <T extends Number> void addFunds(T transferSum) {
         BigDecimal currentTransfer = new BigDecimal(transferSum.toString());
         try {

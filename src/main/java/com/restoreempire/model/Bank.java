@@ -17,6 +17,10 @@ public class Bank extends BaseModel<Bank> {
 
     }
 
+    public Bank(String bankName){
+        setName(bankName);
+    }
+    
     public Bank(long id, String bankName){
         setName(bankName);
         setId(id);

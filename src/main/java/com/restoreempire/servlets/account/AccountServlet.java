@@ -1,4 +1,4 @@
-package com.restoreempire.servlets;
+package com.restoreempire.servlets.account;
 
 
 import com.restoreempire.model.Account;
@@ -27,7 +27,7 @@ public class AccountServlet extends HttpServlet {
             dict.add(account.getFunds().toString());
             values.add(dict);
         } // хранить данные нунжно в контексте сессии
-        String[] keys = new String[]{"ID", "Account Number", "Client", "Bank", "Funds"};
+        String[] keys = new String[]{"ID", "Account Number", "Bank","Client", "Funds"};
         request.setAttribute("keys", keys);
         request.setAttribute("values", values);
         request.setAttribute("title", "Accounts");

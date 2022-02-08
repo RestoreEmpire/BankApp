@@ -21,6 +21,9 @@ public class DataValidation {
         };
         
         try {
+            if(name.equals("")){
+                return true;
+            }
             if(name.length() > 64) // не больше 63 символов
                 throw new NameValidationException(" - length is too long. Please, use shortened name", typeString);
             for(char c : name.toCharArray()) {

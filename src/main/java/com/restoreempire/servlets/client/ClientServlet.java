@@ -1,4 +1,4 @@
-package com.restoreempire.servlets;
+package com.restoreempire.servlets.client;
 
 
 import com.restoreempire.model.Bank;

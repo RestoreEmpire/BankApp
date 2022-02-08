@@ -1,0 +1,15 @@
+WARNING! [01:27:15 08-02-2022] Operation requires a scrollable ResultSet, but this ResultSet is FORWARD_ONLY.
+WARNING! [01:29:39 08-02-2022] Operation requires a scrollable ResultSet, but this ResultSet is FORWARD_ONLY.
+OK! [02:30:51 08-02-2022] New row in db table bank was created
+OK! [07:08:17 08-02-2022] New row in db table client was created
+OK! [07:09:11 08-02-2022] New row in db table client was created
+ERROR! [07:09:24 08-02-2022] Cannot invoke "String.length()" because "name" is null
+ERROR! [07:09:38 08-02-2022] Cannot invoke "String.length()" because "name" is null
+OK! [09:58:48 08-02-2022] New row in db table account was created
+OK! [10:18:50 08-02-2022] New row in db table account was created
+OK! [10:19:01 08-02-2022] New row in db table account was created
+OK! [10:20:28 08-02-2022] New row in db table account was created
+OK! [10:34:51 08-02-2022] New row in db table account was created
+OK! [10:43:23 08-02-2022] New row in db table bank was created
+OK! [10:44:08 08-02-2022] New row in db table client was created
+OK! [10:44:50 08-02-2022] New row in db table account was created

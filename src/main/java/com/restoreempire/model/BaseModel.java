@@ -105,7 +105,11 @@ abstract class BaseModel<T> implements Model<T> {
 
     protected static ResultSet selectAll(String tableName) {
         try (Connection connection = DriverManager.getConnection(connectionUrl, dbUser, dbPassword)) {
-            PreparedStatement selectAll = connection.prepareStatement("select * from " + tableName);
+            PreparedStatement selectAll = connection.prepareStatement(
+                "select * from " + tableName, 
+                ResultSet.TYPE_SCROLL_INSENSITIVE,
+                ResultSet.CONCUR_READ_ONLY
+            );
             ResultSet rs = selectAll.executeQuery();
             if (rs.next()){
                 rs.beforeFirst();
