@@ -2,44 +2,40 @@ package com.restoreempire.model;
 
 import java.sql.ResultSet;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
 import com.restoreempire.processing.data.generators.ClientIdGenerator;
 
-public class Client extends Person implements Model<Client> {
+public class Client extends Person<Client> {
 
-    private int id;
+    private long id;
     private String clientNumber;
-    private final String tableName = "client";
+    private final static String tableName = "client";
 
     public Client(){
 
     }
-    
-    public Client(String surname, String firstName, String middlename, String birthDate) {
-        setAllInfo(firstName, surname, middlename, birthDate);
-        setRandClientNumber();
-    }
 
-    public Client(int id, String surname, String firstName, String middlename, String birthDate, String clientNumber) {
+    public Client(long id,  String clientNumber, String surname, String firstName, String middlename, String birthDate) {
         setAllInfo(firstName, surname, middlename, birthDate);
         setId(id);
         setClientNumber(clientNumber);
         
     }
-    public Client(int id, String surname, String firstName, String middlename, LocalDate birthDate, String clientNumber) {
+    public Client(long id,  String clientNumber, String surname, String firstName, String middlename, LocalDate birthDate) {
         setAllInfo(firstName, surname, middlename, birthDate);
         setId(id);
         setClientNumber(clientNumber);
 
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -58,7 +54,7 @@ public class Client extends Person implements Model<Client> {
     public HashMap<String,Object> serialized(){
         var map = new HashMap<String, Object>();
         if (getId() != 0)
-            map.put("id", String.valueOf(getId()));
+            map.put("id", getId());
         map.put("client_number", getClientNumber());
         map.put("surname", getSurname());
         map.put("first_name", getFirstName());
@@ -74,9 +70,9 @@ public class Client extends Person implements Model<Client> {
     }
 
     @Override
-    public void read(int id) {
+    public void read(long id) {
         try (ResultSet rs = select(tableName, id)) {
-            setId(rs.getInt("id"));
+            setId(rs.getLong("id"));
             setClientNumber(rs.getString("client_number"));
             setSurname(rs.getString("surname"));
             setFirstName(rs.getString("first_name"));
@@ -84,6 +80,26 @@ public class Client extends Person implements Model<Client> {
             setBirthDate(rs.getDate("birthdate").toLocalDate());
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+    
+    public static ArrayList<Client> getAll() {
+        ArrayList<Client> list = new ArrayList<>();
+        try(ResultSet rs = selectAll(tableName)) {
+            while(rs.next()){
+                Client client = new Client(
+                    rs.getLong("id"),
+                    rs.getString("client_number"),
+                    rs.getString("surname"),
+                    rs.getString("first_name"),
+                    rs.getString("middle_name"),
+                    rs.getDate("birthDate").toLocalDate() 
+                    );
+                list.add(client);
+            }
+            return list;
+        } catch (Exception e) {
+            return null;
         }
     }
 

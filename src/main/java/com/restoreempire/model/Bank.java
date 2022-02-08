@@ -1,38 +1,32 @@
 package com.restoreempire.model;
 
 import java.sql.ResultSet;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
 import com.restoreempire.logging.Logger;
 import com.restoreempire.logging.Logger.Status;
 
-public class Bank extends BaseModel implements Model<Bank> {
+public class Bank extends BaseModel<Bank> {
     private String name;
-    private int id;
-    private final String tableName = "bank";
+    private long id;
+    private final static String tableName = "bank";
 
     public Bank(){
 
     }
 
-    public Bank(String bankName) {
-        setName(bankName);
-        Logger.write("New bank \"" + bankName + "\" was created", Status.OK);
-    }
-
-    public Bank(int id, String bankName){
+    public Bank(long id, String bankName){
         setName(bankName);
         setId(id);
-        Logger.write("New bank \"" + bankName + "\" was created", Status.OK);
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -59,14 +53,27 @@ public class Bank extends BaseModel implements Model<Bank> {
     }
 
     @Override
-    public void read(int id) {
+    public void read(long id) {
         try(ResultSet rs = select(tableName,id)){
-            setId(rs.getInt("id"));
+            setId(rs.getLong("id"));
             setName(rs.getString("name"));
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+
+    public static ArrayList<Bank> getAll() {
+        ArrayList<Bank> list = new ArrayList<>();
+        try(ResultSet rs = selectAll(tableName)) {
+            while(rs.next()){
+                Bank bank = new Bank(rs.getLong("id"), rs.getString("name"));
+                list.add(bank);
+            }
+            return list;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override

@@ -12,7 +12,7 @@ public interface Model<T> {
      * Read database element data with {@code id} in current object's fields
      * @param id id of element in database
      */
-    public void read(int id);
+    public void read(long id);
         /**
      *  Update current object from database with {@code object}
      *  @param object object that updates current object fields with its own fields
@@ -23,7 +23,7 @@ public interface Model<T> {
      */
     public void delete();
 
-    public  HashMap<String, Object> serialized();
+    public HashMap<String, Object> serialized();
 
 
 
