@@ -18,6 +18,10 @@ public class Client extends Person<Client> {
 
     }
 
+    public Client(long id){
+        this.read(id);
+    }
+
     public Client(long id,  String clientNumber, String surname, String firstName, String middlename, String birthDate) {
         setAllInfo(firstName, surname, middlename, birthDate);
         setId(id);

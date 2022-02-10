@@ -8,7 +8,7 @@ import com.restoreempire.logging.Logger;
 
 
 
-public class DataValidation {
+public class Validation {
 
     public enum nameType {FIRST, LAST, MIDDLE};
 
@@ -21,7 +21,7 @@ public class DataValidation {
         };
         
         try {
-            if(name.equals("")){
+            if(isNullOrEmpty(name)){
                 return true;
             }
             if(name.length() > 64) // не больше 63 символов
@@ -74,5 +74,14 @@ public class DataValidation {
             Logger.write(e.getMessage(), Logger.Status.ERROR);
             return false;
         }
+    }
+    
+    public static boolean isNullOrEmpty(String string) {
+        if(string == null)
+            return true;
+        else if(string.isEmpty())
+            return true;
+        else
+            return false;
     }
 }

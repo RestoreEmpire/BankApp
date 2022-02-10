@@ -15,21 +15,29 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 
-@WebServlet(name="accountCreate", urlPatterns = "/accounts/create")
-public class AccountCreateServlet extends HttpServlet {
-    
+@WebServlet(name="accountPage", urlPatterns = "/accounts/p")
+public class AccountPageServlet extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ArrayList<Bank> banks = Bank.getAll();
         ArrayList<Client> clients = Client.getAll();
         req.setAttribute("banks", banks);
         req.setAttribute("clients", clients);
+        if(!Validation.isNullOrEmpty(req.getParameter("id"))){
+            Account account = new Account(Long.parseLong(req.getParameter("id")));
+            getServletContext().setAttribute("account", account);
+            
+            req.setAttribute("title", account.getAccountNumber());
+            req.setAttribute("defaultBank", new Bank(account.getBankId()));
+            req.setAttribute("defaultClient", new Client(account.getClientId()));
+        }
         getServletContext().getRequestDispatcher("/create/account.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // account-number=123&bank=1&client=3&funds=123
+        Account retAccount = (Account) getServletContext().getAttribute("account");
         if (
             !Validation.isNullOrEmpty(req.getParameter("bank")) &&
             !Validation.isNullOrEmpty(req.getParameter("client"))
@@ -50,8 +58,9 @@ public class AccountCreateServlet extends HttpServlet {
             else{
                 account.setRandomAccountNumber();
             }
-        
-            account.create();
+            account.setId(retAccount.getId());
+            retAccount.update(account);
+            
         }
         resp.sendRedirect("/accounts");
     }

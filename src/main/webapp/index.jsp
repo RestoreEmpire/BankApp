@@ -6,7 +6,7 @@
     <div class="body">
         <div class="container list-group">
             <a href='/banks' class="list-group-item list-group-item-action">
-                banks
+                Banks
                 <object>
                     <a class="float-end btn btn-primary" href="/banks/create">Create new</a>
                 </object>

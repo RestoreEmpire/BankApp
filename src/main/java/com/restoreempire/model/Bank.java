@@ -4,9 +4,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.restoreempire.processing.data.validators.Validation;
 
-import com.restoreempire.logging.Logger;
-import com.restoreempire.logging.Logger.Status;
 
 public class Bank extends BaseModel<Bank> {
     private String name;
@@ -15,6 +14,10 @@ public class Bank extends BaseModel<Bank> {
 
     public Bank(){
 
+    }
+
+    public Bank(long id) {
+        this.read(id);
     }
 
     public Bank(String bankName){
@@ -46,8 +49,9 @@ public class Bank extends BaseModel<Bank> {
 
         var map = new HashMap<String, Object>();
         if (getId() != 0)
-            map.put("id", String.valueOf(getId()));
-        map.put("name", getName());
+            map.put("id", getId());
+        if (!Validation.isNullOrEmpty(getName()))
+            map.put("name", getName());
         return map;
     }
 

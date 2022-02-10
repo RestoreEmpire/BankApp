@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 import com.restoreempire.logging.Logger;
 import com.restoreempire.processing.data.generators.AccountNumberGenerator;
-import com.restoreempire.processing.data.validators.DataValidation;
+import com.restoreempire.processing.data.validators.Validation;
 
 public class Account extends BaseModel<Account> {
 
@@ -20,6 +20,19 @@ public class Account extends BaseModel<Account> {
 
     public Account(){
 
+    }
+
+    public Account(long id) {
+        this.read(id);
+    }
+
+    public Account(long id, String accountNumber, long bankId, long clientId, BigDecimal funds){
+        setClientId(clientId);
+        setBankId(bankId);
+        setAccountNumber(accountNumber);
+        setFunds(funds);
+        setId(id);
+        // ID, ACCOUNT_NUMBER, BANK_ID, CLIENT_ID, FUNDS
     }
 
     public Long getClientId() {
@@ -38,14 +51,6 @@ public class Account extends BaseModel<Account> {
         this.bankId = bankId;
     }
 
-    public Account(long id, String accountNumber, long bankId, long clientId, BigDecimal funds){
-        setClientId(clientId);
-        setBankId(bankId);
-        setAccountNumber(accountNumber);
-        setFunds(funds);
-        setId(id);
-        // ID, ACCOUNT_NUMBER, BANK_ID, CLIENT_ID, FUNDS
-    }
 
     public long getId() {
         return id;
@@ -60,7 +65,7 @@ public class Account extends BaseModel<Account> {
     }
 
     public void setFunds(BigDecimal funds) {
-        this.funds = DataValidation.validateAccountFunds(funds) ? funds : this.funds;
+        this.funds = Validation.validateAccountFunds(funds) ? funds : this.funds;
     }
 
     public void setFunds(String funds) {

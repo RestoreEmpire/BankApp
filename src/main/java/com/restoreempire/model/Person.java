@@ -3,8 +3,8 @@ package com.restoreempire.model;
 import java.time.LocalDate;
 import java.util.HashMap;
 
-import com.restoreempire.processing.data.validators.DataValidation;
-import com.restoreempire.processing.data.validators.DataValidation.nameType;
+import com.restoreempire.processing.data.validators.Validation;
+import com.restoreempire.processing.data.validators.Validation.nameType;
 
 public abstract class Person<T> extends BaseModel<T> {
 
@@ -14,7 +14,7 @@ public abstract class Person<T> extends BaseModel<T> {
     private LocalDate birthDate;
 
     public void setFirstName(String name) {
-        this.firstName = DataValidation.validateName(name, nameType.FIRST) ? name : firstName;
+        this.firstName = Validation.validateName(name, nameType.FIRST) ? name : firstName;
     }
 
     public String getFirstName() {
@@ -22,7 +22,7 @@ public abstract class Person<T> extends BaseModel<T> {
     }
 
     public void setSurname(String surname) {
-        this.surname = DataValidation.validateName(surname,  nameType.LAST) ? surname : this.surname; 
+        this.surname = Validation.validateName(surname,  nameType.LAST) ? surname : this.surname; 
     }
 
     public String getSurname() {
@@ -30,7 +30,7 @@ public abstract class Person<T> extends BaseModel<T> {
     }
 
     public void setMiddlename(String middlename) {
-        this.middlename = DataValidation.validateName(middlename, nameType.MIDDLE) ? middlename : this.middlename; 
+        this.middlename = Validation.validateName(middlename, nameType.MIDDLE) ? middlename : this.middlename; 
     }
 
     public String getMiddlename() {

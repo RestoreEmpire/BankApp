@@ -8,7 +8,7 @@
         <form method="post"> 
             <div class="mb-3">
                 <label for="clientNumber" class="form-label">Client number</label>
-                <input type="text" class="form-control" id="clientNumber" name="client-number">
+                <input type="text" class="form-control" id="clientNumber" name="client-number" value="${client.clientNumber}">
             </div>
             <div class="mb-3 form-check">
                 <input onclick='disableContent("clientNumber")' type="checkbox" class="form-check-input" id="clientNumberCheck" name="noclient-number">
@@ -16,31 +16,27 @@
               </div>
             <div class="mb-3">
               <label for="clientSurnameInput" class="form-label">Surname</label>
-              <input type="text" class="form-control" id="clientSurnameInput" name="surname">
+              <input type="text" class="form-control" id="clientSurnameInput" name="surname" value="${client.surname}">
             </div>
             <div class="mb-3">
                 <label for="clientFirstNameInput" class="form-label">First name</label>
-                <input type="text" class="form-control" id="clientFirstNameInput" name="firstname">
+                <input type="text" class="form-control" id="clientFirstNameInput" name="firstname" value="${client.firstName}">
             </div>
             <div class="mb-3">
                 <label for="clientMiddleName" class="form-label">Middle name</label>
-                <input type="text" class="form-control" id="clientMiddleName" name="middlename">
+                <input type="text" class="form-control" id="clientMiddleName" name="middlename" value="${client.middlename}">
             </div>
             <div class="mb-3 form-check">
                 <input onclick='disableContent("clientMiddleName")' type="checkbox" class="form-check-input" id="clientNumberCheck" name="nomiddlename">
                 <label class="form-check-label" for="middlenameCheck">There is no middle name</label>
               </div>
             <div class="mb-3">
-                <label for="clientNumber" class="form-label">Birth date</label>
-                <input type="date" id="birthDate" name="birthdate" value="2000-01-01">
+                <label for="birthDate" class="form-label">Birth date</label>
+                <input type="date" id="birthDate" name="birthdate" value="${client.birthDate}">
             </div>
 
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button id="submit" type="submit" class="btn btn-primary">Submit</button>
           </form>
     </div>
 </div>
-<script>
-
-    
-</script>
 <jsp:include page="../template/footer.jsp"/>

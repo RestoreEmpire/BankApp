@@ -7,3 +7,16 @@ function disableContent(elementId) {
         document.getElementById(elementId).value = "";
     }
 }
+
+function disableKey(elementId,buttonId) {
+    if(document.getElementById(elementId).value.length > 0) {
+        document.getElementById(buttonId).disabled = false;
+    }
+    else {
+        document.getElementById(buttonId).disabled = true;
+    }
+}
+
+function clientNumberValidation(elementId, buttonId) {
+    
+}

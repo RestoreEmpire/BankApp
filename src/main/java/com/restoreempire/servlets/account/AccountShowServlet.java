@@ -2,6 +2,8 @@ package com.restoreempire.servlets.account;
 
 
 import com.restoreempire.model.Account;
+import com.restoreempire.processing.data.validators.Validation;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -11,8 +13,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet(name="account",urlPatterns={"/accounts"})
-public class AccountServlet extends HttpServlet {
+@WebServlet(name="accountShow",urlPatterns={"/accounts"})
+public class AccountShowServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -38,13 +40,18 @@ public class AccountServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getParameter("delete") != null) {
+        if(!Validation.isNullOrEmpty(req.getParameter("change"))) {
+            resp.sendRedirect("/accounts/p?&id=" + req.getParameter("change"));
+        }
+        if (!Validation.isNullOrEmpty(req.getParameter("delete"))) {
             int id = Integer.valueOf(req.getParameter("delete"));
             Account account = new Account();
             account.read(id);
             account.delete();
+            resp.sendRedirect("/accounts");
         }
-        resp.sendRedirect("/accounts");
+        
     }
 
+    
 }

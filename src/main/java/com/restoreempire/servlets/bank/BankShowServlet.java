@@ -2,6 +2,8 @@ package com.restoreempire.servlets.bank;
 
 
 import com.restoreempire.model.Bank;
+import com.restoreempire.processing.data.validators.Validation;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -11,8 +13,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet(name="bank",urlPatterns={"/banks"})
-public class BankServlet extends HttpServlet {
+@WebServlet(name="bankShow",urlPatterns={"/banks"})
+public class BankShowServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -29,21 +31,22 @@ public class BankServlet extends HttpServlet {
         request.setAttribute("keys", keys);
         request.setAttribute("values", banksStringify);
         request.setAttribute("title", "Banks");
-
-
         getServletContext().getRequestDispatcher("/show.jsp").forward(request, response);
-
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getParameter("delete") != null) {
+        if(!Validation.isNullOrEmpty(req.getParameter("change"))) {
+            resp.sendRedirect("/banks/p?&id=" + req.getParameter("change"));
+        }
+        if (!Validation.isNullOrEmpty(req.getParameter("delete"))) {
             int id = Integer.valueOf(req.getParameter("delete"));
             Bank bank = new Bank();
             bank.read(id);
             bank.delete();
+            resp.sendRedirect("/banks");
         }
-        resp.sendRedirect("/banks");
     }
+
 
 }

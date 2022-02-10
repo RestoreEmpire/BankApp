@@ -12,26 +12,23 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Map;
 
-@WebServlet(name="clientCreate",urlPatterns={"/clients/create"})
-public class ClientCreateServlet extends HttpServlet {
+@WebServlet(name="clientPage",urlPatterns={"/clients/p"})
+public class ClientPageServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        getServletContext().getRequestDispatcher("/create/client.jsp").forward(request, response);
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        if(!Validation.isNullOrEmpty(req.getParameter("id"))) {
+            Client client = new Client(Long.parseLong(req.getParameter("id")));
+            getServletContext().setAttribute("client", client);
+            req.setAttribute("title", client.getClientNumber());
+        }
+        getServletContext().getRequestDispatcher("/create/client.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        
-        //client-number=123124
-        // &surname=12313
-        // &firstname=123123
-        // &middlename=123123
-        // &birthdate=2000-01-01
-        // &noclient-number=on&nomiddlename=on
+        Client retClient = (Client) getServletContext().getAttribute("client");
         if (
             !Validation.isNullOrEmpty(req.getParameter("surname")) &&          
             !Validation.isNullOrEmpty(req.getParameter("firstname")) && 
@@ -54,7 +51,8 @@ public class ClientCreateServlet extends HttpServlet {
                 else {
                     client.setRandClientNumber();
                 }
-                client.create();
+                client.setId(retClient.getId());
+                retClient.update(client);
         }
         resp.sendRedirect("/clients");
     }
