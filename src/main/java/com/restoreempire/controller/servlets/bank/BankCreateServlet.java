@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(name="bankCreate",urlPatterns={"/banks/create/"})
+@WebServlet(name="bankCreate",urlPatterns={"/banks/create"})
 public class BankCreateServlet extends HttpServlet {
 
     @Override
@@ -30,7 +30,8 @@ public class BankCreateServlet extends HttpServlet {
             String name = req.getParameter("name");
             Bank bank = new Bank(name);
             new BankDao().create(bank);
+            resp.sendRedirect("/banks");
         } else throw new ValidationException("Wrong form input");
-        resp.sendRedirect("/banks");
+        
     }
 }

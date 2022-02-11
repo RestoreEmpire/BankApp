@@ -54,8 +54,9 @@ public class ClientPageServlet extends HttpServlet {
                 }
                 client.setId(retClient.getId());
                 new ClientDao().update(retClient,client);
+                resp.sendRedirect("/clients");
         }
         else throw new ValidationException("Wrong form input");
-        resp.sendRedirect("/clients");
+
     }
 }

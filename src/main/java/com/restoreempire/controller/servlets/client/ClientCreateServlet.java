@@ -56,7 +56,8 @@ public class ClientCreateServlet extends HttpServlet {
                 }
                 Dao<Client> dao = new ClientDao();
                 dao.create(client);
+                resp.sendRedirect("/clients");
         } else throw new ValidationException("Wrong form input");
-        resp.sendRedirect("/clients");
+        
     }
 }

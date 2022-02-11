@@ -2,6 +2,7 @@ package com.restoreempire.model;
 
 import java.time.LocalDate;
 
+import com.restoreempire.exceptions.ValidationException;
 import com.restoreempire.processing.data.generators.ClientIdGenerator;
 
 public class Client extends Person {
@@ -25,8 +26,11 @@ public class Client extends Person {
 
     }
 
-    public void setClientNumber(String clientNumber){
+    public void setClientNumber(String clientNumber) throws ValidationException{
+        if (clientNumber.length() == 12)
         this.clientNumber = clientNumber;
+        else
+            throw new ValidationException("Wrong client number");
     }
     public void setRandClientNumber() {
         clientNumber = new ClientIdGenerator().generate();

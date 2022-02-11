@@ -34,9 +34,10 @@ public class BankPageServlet extends HttpServlet {
             Bank replace = new Bank(req.getParameter("name"));
             replace.setId(bank.getId());
             new BankDao().update(bank, replace);
+            resp.sendRedirect("/banks");
         }
         else throw new ValidationException("Wrong form input");
-        resp.sendRedirect("/banks");
+        
     }
 }
 

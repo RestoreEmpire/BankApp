@@ -48,3 +48,9 @@ ERROR! [11:13:51 09-02-2022] Cannot invoke "String.equals(Object)" because "name
 OK! [11:14:10 09-02-2022] Row was updated
 ERROR! [11:14:10 09-02-2022] Cannot invoke "String.equals(Object)" because "name" is null
 OK! [11:14:43 09-02-2022] Row was updated
+OK! [11:58:55 11-02-2022] Row was updated
+OK! [12:03:01 12-02-2022] Row was updated
+OK! [12:32:23 12-02-2022] New row in db table bank was created
+WARNING! [12:58:02 12-02-2022] ОШИБКА: повторяющееся значение ключа нарушает ограничение уникальности "bank_name_key"
+  Подробности: Ключ "(name)=(Tinkoff)" уже существует.
+OK! [12:58:08 12-02-2022] New row in db table bank was created

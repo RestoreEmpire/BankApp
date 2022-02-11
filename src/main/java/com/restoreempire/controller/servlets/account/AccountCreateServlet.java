@@ -59,7 +59,7 @@ public class AccountCreateServlet extends HttpServlet {
                 account.setRandomAccountNumber();
             }
             new AccountDao().create(account);
+            resp.sendRedirect("/accounts");
         } else throw new ValidationException("Wrong form input");
-        resp.sendRedirect("/accounts");
     }
 }

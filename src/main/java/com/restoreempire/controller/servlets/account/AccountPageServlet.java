@@ -63,9 +63,9 @@ public class AccountPageServlet extends HttpServlet {
             }
             account.setId(retAccount.getId());
             new AccountDao().update(retAccount, account);
-            
+            resp.sendRedirect("/accounts");
         }
         else throw new ValidationException("Wrong form input");
-        resp.sendRedirect("/accounts");
+
     }
 }
