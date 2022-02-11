@@ -1,6 +1,6 @@
 package com.restoreempire.exceptions;
 
-public class NameValidationException extends Exception {
+public class NameValidationException extends ValidationException {
     private String nameType;
     
     public NameValidationException(String message, String type){

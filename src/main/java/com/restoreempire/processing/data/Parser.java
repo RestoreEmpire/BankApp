@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 import com.restoreempire.exceptions.CSVParserException;
@@ -17,7 +18,7 @@ public class Parser {
     private String path = "\\db\\";
     private String dbName;
     private String filePath;
-    private ArrayList<ArrayList<String>> table = null;
+    private List<List<String>> table;
     
     public Parser(String dbName){
         setDbName(dbName);
@@ -75,14 +76,14 @@ public class Parser {
         rewrite();
     }
 
-    public ArrayList<String> getRow(int rowIndex){
+    public List<String> getRow(int rowIndex){
         return table.get(rowIndex + 1);
     }
 
-    public ArrayList<String> getRowById (String id){
+    public List<String> getRowById (String id){
         try{
             for(int i = 1; i < table.size(); i++){
-                ArrayList<String> row = table.get(i);
+                List<String> row = table.get(i);
                 if (row.get(0).equals(id))
                     return row;
             }
@@ -95,14 +96,14 @@ public class Parser {
     }
 
     public void changeRow(int rowIndex, String... row){
-        var listedRow = new ArrayList<String>();
+        List<String> listedRow = new ArrayList<>();
         Collections.addAll(listedRow, row);
         table.set(rowIndex - 1, listedRow);
         rewrite();
     }
 
     public void updateTable(){
-        var table = new ArrayList<ArrayList<String>>();
+        List<List<String>> table = new ArrayList<>();
         try (Scanner scanner = new Scanner(new File(filePath), StandardCharsets.UTF_8)) {
             if(!scanner.hasNextLine()) 
                 throw new CSVParserException("Table is empty");
@@ -110,7 +111,7 @@ public class Parser {
             Collections.addAll(titles, scanner.nextLine().split(",\\s"));
             table.add(titles);
             while(scanner.hasNextLine()){
-                ArrayList<String> elements = new ArrayList<String>();
+                List<String> elements = new ArrayList<>();
                 Collections.addAll(elements, scanner.nextLine().split(",\\s"));
                 if(elements.size() > titles.size()) throw new CSVParserException("Number of elements not equals for number of titles");
                 table.add(elements);

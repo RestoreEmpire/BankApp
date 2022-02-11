@@ -1,29 +1,22 @@
 package com.restoreempire.model;
 
 import java.math.BigDecimal;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.HashMap;
 
+import com.restoreempire.exceptions.AccountFundsValidationException;
 import com.restoreempire.logging.Logger;
 import com.restoreempire.processing.data.generators.AccountNumberGenerator;
 import com.restoreempire.processing.data.validators.Validation;
 
-public class Account extends BaseModel<Account> {
+public class Account extends BaseModel{
 
     private String accountNumber;
     private Long bankId;
     private Long clientId;
     private BigDecimal funds = BigDecimal.ZERO;
-    private long id;
-    private final static String tableName = "account";
+
 
     public Account(){
 
-    }
-
-    public Account(long id) {
-        this.read(id);
     }
 
     public Account(long id, String accountNumber, long bankId, long clientId, BigDecimal funds){
@@ -49,15 +42,6 @@ public class Account extends BaseModel<Account> {
 
     public void setBankId(Long bankId) {
         this.bankId = bankId;
-    }
-
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public BigDecimal getFunds(){
@@ -90,7 +74,7 @@ public class Account extends BaseModel<Account> {
             if (currentTransfer.compareTo(BigDecimal.ZERO) > 0)
                 setFunds(getFunds().add(currentTransfer));
             else
-                throw new Exception("Amount of the transferred money should be more than 0");
+                throw new AccountFundsValidationException("Amount of the transferred money should be more than 0");
         } catch (Exception e) {
             e.printStackTrace();
             Logger.write(e.getMessage(), Logger.Status.ERROR);
@@ -103,75 +87,14 @@ public class Account extends BaseModel<Account> {
             if (currentTransfer.compareTo(getFunds()) < 0)
                 setFunds(getFunds().subtract(currentTransfer));
             else
-                throw new Exception("Amount of the withdrawn money should be more than 0");
+                throw new AccountFundsValidationException("Amount of the withdrawn money should be more than 0");
         } catch (Exception e) {
             e.printStackTrace();
             Logger.write(e.getMessage(), Logger.Status.ERROR);
         }
         
     }
-
-    @Override
-    public HashMap<String, Object> serialized() {
-        var map = new HashMap<String, Object>();
-        if(getId() != 0)
-            map.put("id", getId());
-        map.put("account_number", getAccountNumber());
-        map.put("bank_id", getBankId());
-        map.put("client_id", getClientId());
-        map.put("funds", getFunds());
-        return map;
-    }
-
-    @Override
-    public void create() {
-        insert(tableName, serialized());
-    }
-
-    @Override
-    public void read(long id) {
-        try (ResultSet rs = select(tableName, id)) {
-                setId(rs.getLong("id"));
-                setAccountNumber(rs.getString("account_number"));
-                setBankId(rs.getLong("bank_id"));
-                setClientId(rs.getLong("client_id"));
-                setFunds(rs.getBigDecimal("funds"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public static ArrayList<Account> getAll() {
-        ArrayList<Account> list = new ArrayList<>();
-        try(ResultSet rs = selectAll(tableName)) {
-            while(rs.next()){
-                Account account = new Account(
-                    rs.getLong("id"),
-                    rs.getString("account_number"), 
-                    rs.getLong("bank_id"),
-                    rs.getLong("client_id"),
-                    rs.getBigDecimal("funds")
-                    );
-                list.add(account);
-            }
-            return list;
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    @Override
-    public void update(Account account) {
-        dbUpdate(tableName, getId(), account.serialized());
-    }
-
-
-    @Override
-    public void delete() {
-        dbDelete(tableName, getId());
-    }
-
+ 
     @Override
     public String toString() {
         return  getAccountNumber();

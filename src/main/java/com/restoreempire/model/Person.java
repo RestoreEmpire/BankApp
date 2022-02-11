@@ -1,12 +1,11 @@
 package com.restoreempire.model;
 
 import java.time.LocalDate;
-import java.util.HashMap;
 
 import com.restoreempire.processing.data.validators.Validation;
 import com.restoreempire.processing.data.validators.Validation.nameType;
 
-public abstract class Person<T> extends BaseModel<T> {
+public abstract class Person extends BaseModel {
 
     private String firstName;
     private String surname;
@@ -65,10 +64,6 @@ public abstract class Person<T> extends BaseModel<T> {
         setSurname(surname);
         setMiddlename(middlename);
         setBirthDate(birthDate);
-    }
-    public void setAllInfo(HashMap<String, String> dict){
-
-        // TODO: сделать реализацию этого метода через словарь
     }
 
 

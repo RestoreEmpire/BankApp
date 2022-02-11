@@ -1,7 +1,7 @@
 package com.restoreempire.exceptions;
 
-public class AccountFundsValidationException extends Exception{
-    AccountFundsValidationException(String message){
+public class AccountFundsValidationException extends ValidationException{
+    public AccountFundsValidationException(String message){
         super(message);
     }
 
