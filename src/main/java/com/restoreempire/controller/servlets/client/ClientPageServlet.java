@@ -21,7 +21,7 @@ public class ClientPageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         if(!Validation.isNullOrEmpty(req.getParameter("id"))) {
             Client client = new ClientDao().read(Long.parseLong(req.getParameter("id")));
-            getServletContext().setAttribute("client", client);
+            req.setAttribute("client", client);
             req.setAttribute("title", client.getClientNumber());
         }
         getServletContext().getRequestDispatcher("/page/client.jsp").forward(req, resp);
@@ -29,7 +29,7 @@ public class ClientPageServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Client retClient = (Client) getServletContext().getAttribute("client");
+        Client retClient = (Client) req.getAttribute("client");
         if (
             !Validation.isNullOrEmpty(req.getParameter("surname")) &&          
             !Validation.isNullOrEmpty(req.getParameter("firstname")) && 

@@ -42,8 +42,7 @@ public class AccountPageServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Account retAccount = (Account) getServletContext().getAttribute("account");
         if (
-            !Validation.isNullOrEmpty(req.getParameter("bank")) &&
-            !Validation.isNullOrEmpty(req.getParameter("client"))
+            Validation.isNullOrEmpty(req.getParameter("bank")) || Validation.isNullOrEmpty(req.getParameter("client"))
         ){
             Account account = new Account();
             account.setBankId(Long.parseLong(req.getParameter("bank")));
@@ -63,6 +62,7 @@ public class AccountPageServlet extends HttpServlet {
             }
             account.setId(retAccount.getId());
             new AccountDao().update(retAccount, account);
+            getServletContext().removeAttribute("account");
             resp.sendRedirect("/accounts");
         }
         else throw new ValidationException("Wrong form input");

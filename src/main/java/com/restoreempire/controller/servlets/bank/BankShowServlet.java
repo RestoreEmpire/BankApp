@@ -21,16 +21,22 @@ public class BankShowServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String pageIdParam = request.getParameter("page");
+        int pageId = Validation.isNullOrEmpty(pageIdParam) ? 1 : Integer.parseInt(pageIdParam);
+        int rows = 5;
         List<List<String>> banksStringify = new ArrayList<>();
-        
         List<Bank> banks = new BankDao().getAll();
-        for (Bank bank : banks) {
+        int pages = ((banks.size() - 1) / rows) + 1;
+        for (int i = (pageId - 1) * rows; (i < pageId * rows) && (i < banks.size()); i++) {
+            Bank bank = banks.get(i);
             var bankDict = new ArrayList<String>();
             bankDict.add(String.valueOf(bank.getId()));
             bankDict.add(bank.getName());
             banksStringify.add(bankDict);
-        } // хранить данные нунжно в контексте сессии
+        }
+
         String[] keys = new String[]{"ID", "Name"};
+        request.setAttribute("pages", pages);
         request.setAttribute("keys", keys);
         request.setAttribute("values", banksStringify);
         request.setAttribute("title", "Banks");

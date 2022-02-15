@@ -19,7 +19,7 @@ public class BankCreateServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-
+        getServletContext().removeAttribute("bank");
         req.setAttribute("title", "Bank | Create");
         getServletContext().getRequestDispatcher("/page/bank.jsp").forward(req, resp);
     }

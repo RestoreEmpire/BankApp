@@ -6,8 +6,8 @@
           rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
           crossorigin="anonymous">
-          <link rel="stylesheet" href="static/style.css">
-          <link rel="stylesheet" href="static/fontawesome-free-6.0.0-web/css/all.css">
+          <link rel="stylesheet" href="/static/style.css">
+          <link rel="stylesheet" href="/static/fontawesome-free-6.0.0-web/css/all.css">
     <% String title = request.getParameter("title"); %>
     
     <title><%= title %> </title>

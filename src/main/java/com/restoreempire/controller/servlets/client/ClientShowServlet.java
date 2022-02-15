@@ -21,9 +21,14 @@ public class ClientShowServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String pageIdParam = request.getParameter("page");
+        int pageId = Validation.isNullOrEmpty(pageIdParam) ? 1 : Integer.parseInt(pageIdParam);
+        int rows = 5;
         List<List<String>> clientsStringify = new ArrayList<>();
         List<Client> clients = new ClientDao().getAll();
-        for (Client client: clients) {
+        int pages = ((clients.size() - 1) / rows) + 1;
+        for (int i = (pageId - 1) * rows; (i < pageId * rows) && (i < clients.size()); i++) {
+            Client client = clients.get(i);
             var dict = new ArrayList<String>();
             dict.add(String.valueOf(client.getId()));
             dict.add(client.getClientNumber());
@@ -32,8 +37,9 @@ public class ClientShowServlet extends HttpServlet {
             dict.add(client.getMiddlename());
             dict.add(client.getBirthDate().toString());
             clientsStringify.add(dict);
-        } // хранить данные нунжно в контексте сессии
+        }
         String[] keys = new String[]{"ID", "Client Number", "Surname", "First Name", "Middle name", "Birth date"};
+        request.setAttribute("pages", pages);
         request.setAttribute("keys", keys);
         request.setAttribute("values", clientsStringify);
         request.setAttribute("title", "Clients");

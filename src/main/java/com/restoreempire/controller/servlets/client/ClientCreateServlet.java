@@ -20,6 +20,8 @@ public class ClientCreateServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        getServletContext().removeAttribute("client");
+        request.setAttribute("title", "Create | client");
         getServletContext().getRequestDispatcher("/page/client.jsp").forward(request, response);
     }
 

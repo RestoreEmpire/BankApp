@@ -21,7 +21,9 @@ public class Validation  {
             case MIDDLE -> "Middle name";
         };
         
-    
+            if (nameType == Validation.nameType.MIDDLE && name == null) {
+                return true; // Отчество(Среднее имя) может отсутствовать 
+            } 
             if(name.length() > 64) // не больше 63 символов
                 throw new NameValidationException(" - length is too long. Please, use shortened name", typeString);
             for(char c : name.toCharArray()) {

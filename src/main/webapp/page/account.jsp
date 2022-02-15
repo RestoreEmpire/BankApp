@@ -17,7 +17,7 @@
 
             <div class="mb-3">
                 <label for="accountNumber" class="form-label">Account number</label>
-                <input type="text" class="form-control" id="accountNumber" name="account-number" value="${account.accountNumber}">
+                <input type="text" class="form-control" id="accountNumber" name="account-number" value="${account.accountNumber}" required>
             </div>
             <div class="mb-3 form-check">
                 <input onclick='disableContent("accountNumber")' type="checkbox" class="form-check-input" id="accountNumberCheck" name="no-account-number">
@@ -25,8 +25,8 @@
               </div>
             <div class="mb-3">
                 <label for="bankSelect" class="form-label">Bank</label>
-                <select class="form-select" aria-label="Select" id="bankSelect" name="bank">
-                    <option value="${defaultBank.id}" selected>${defaultBank.id} ${defaultBank.name}</option>
+                <select class="form-select" aria-label="Select" id="bankSelect" name="bank" required>
+                    <option value="${defaultBank.id}" selected>${defaultBank.id} ${defaultBank.name} </option>
                     <c:forEach var="bank" items="${banks}">
                         <option value="${bank.id}">${bank.id} ${bank.name}</option>
                     </c:forEach>
@@ -34,8 +34,8 @@
             </div>
             <div class="mb-3">
                 <label for="clientSelect" class="form-label">Client</label>
-                <select name="client" id="clientSelect" class="form-select">
-                    <option value="${defaultClient}" selected>${defaultClient.clientNumber} ${defaultClient}</option>
+                <select name="client" id="clientSelect" class="form-select" required>
+                    <option value="${defaultClient.id}" selected>${defaultClient.clientNumber} ${defaultClient}</option>
                     <c:forEach var="client" items="${clients}">
                         <option value="${client.id}">${client.clientNumber} ${client}</option>
                     </c:forEach>
@@ -45,7 +45,7 @@
             
             <div class="mb-3">
                 <label for="funds" class="form-label">funds</label>
-                <input type="text" class="form-control" id="funds" name="funds" value="${account.funds}">
+                <input type="text" class="form-control" id="funds" name="funds" value="${account.funds}" required>
             </div>
             
 

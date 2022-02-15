@@ -22,10 +22,10 @@
                         </c:forEach>
                         <td class="col-2">
                             <form method="post">
-                                <button class="btn btn-primary" name="change" value="${row[0]}">
+                                <button class="btn btn-primary" name="change" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Change this entry" value="${row[0]}">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </button>
-                                <button class="btn btn-primary" name="delete" value="${row[0]}">
+                                <button class="btn btn-primary" name="delete" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete this entry" value="${row[0]}">
                                     <i class="fa-solid fa-trash-can"></i>
                                 </button>
                             </form>
@@ -34,7 +34,16 @@
                 </c:forEach>
             </tbody>
         </table>
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <c:forEach var = "i" begin = "1" end = "${pages}">
+                    <li class="page-item"><a class="page-link" href="?&page=${i}">${i}</a></li>
+                </c:forEach>        
+            </ul>
+        </nav>
     </div>
 </div>
+
+
 
 <jsp:include page="../template/footer.jsp"/>

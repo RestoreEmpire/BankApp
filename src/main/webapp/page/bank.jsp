@@ -5,10 +5,10 @@
 </jsp:include>
 <div class="body">
     <div class="container">
-        <form method="post"> 
-            <div class="mb-3 was-validated">
+        <form class="was-validated" method="post"> 
+            <div class="mb-3">
               <label for="bankNameInput" class="form-label">Bank name</label> 
-              <input type="text" class="form-control" id="bankNameInput"  name="name" value="${bank.name}"required >
+              <input type="text" class="form-control" id="bankNameInput"  name="name" value="${bank.name}" required >
               <div class="invalid-feedback">Required field.</div>
             </div>
             <button type="submit" class="btn btn-primary" id="submit" >Submit</button>

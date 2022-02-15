@@ -23,7 +23,12 @@ public class AccountShowServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         List<List<String>> values = new ArrayList<>();
         List<Account> accounts = new AccountDao().getAll();
-        for (Account account : accounts) {
+        String pageIdParam = request.getParameter("page");
+        int pageId = Validation.isNullOrEmpty(pageIdParam) ? 1 : Integer.parseInt(pageIdParam);
+        int rows = 5;
+        int pages = ((accounts.size() - 1) / rows) + 1;
+        for (int i = (pageId - 1) * rows; (i < pageId * rows) && (i < accounts.size()); i++) {
+            Account account = accounts.get(i);
             var dict = new ArrayList<String>();
             dict.add(String.valueOf(account.getId()));
             dict.add(account.getAccountNumber());
@@ -31,12 +36,12 @@ public class AccountShowServlet extends HttpServlet {
             dict.add(account.getClientId().toString());
             dict.add(account.getFunds().toString());
             values.add(dict);
-        } // хранить данные нунжно в контексте сессии
+        } 
         String[] keys = new String[]{"ID", "Account Number", "Bank","Client", "Funds"};
+        request.setAttribute("pages", pages);
         request.setAttribute("keys", keys);
         request.setAttribute("values", values);
         request.setAttribute("title", "Accounts");
-
         getServletContext().getRequestDispatcher("/page/show.jsp").forward(request, response);
 
     }

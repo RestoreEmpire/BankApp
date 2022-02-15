@@ -54,3 +54,8 @@ OK! [12:32:23 12-02-2022] New row in db table bank was created
 WARNING! [12:58:02 12-02-2022] ОШИБКА: повторяющееся значение ключа нарушает ограничение уникальности "bank_name_key"
   Подробности: Ключ "(name)=(Tinkoff)" уже существует.
 OK! [12:58:08 12-02-2022] New row in db table bank was created
+OK! [03:34:26 14-02-2022] New row in db table account was created
+OK! [03:56:18 14-02-2022] New row in db table account was created
+OK! [04:31:13 14-02-2022] New row in db table bank was created
+OK! [09:46:31 14-02-2022] New row in db table client was created
+OK! [09:59:53 14-02-2022] Row was updated
