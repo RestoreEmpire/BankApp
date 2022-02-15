@@ -14,6 +14,8 @@ import com.restoreempire.exceptions.CSVParserException;
 import com.restoreempire.exceptions.RowNotFoundInTableException;
 import com.restoreempire.logging.Logger;
 
+
+/** It was made to use csv file as database in the beginning of the proj */
 public class Parser {
     private String path = "\\db\\";
     private String dbName;

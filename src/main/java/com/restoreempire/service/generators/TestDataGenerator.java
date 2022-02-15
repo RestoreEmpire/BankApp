@@ -2,6 +2,9 @@ package com.restoreempire.service.generators;
 
 import java.math.BigDecimal;
 
+/** Class used to generate random data for database
+ * TODO: Make main method that fills database with random data
+ */
 public class TestDataGenerator {
 
     static String[] names = new String[]{"Artem", "Anton", "Boris", "Nikolay", "Viktor"};

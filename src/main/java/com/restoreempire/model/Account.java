@@ -7,6 +7,10 @@ import com.restoreempire.logging.Logger;
 import com.restoreempire.service.generators.AccountNumberGenerator;
 import com.restoreempire.service.validators.Validation;
 
+/** Model that represents account.  
+ * Contains bank account number, references to bank and client in db, 
+ * and amount of money in the account.
+ */
 public class Account extends BaseModel{
 
     private String accountNumber;
@@ -56,6 +60,7 @@ public class Account extends BaseModel{
         BigDecimal bd = new BigDecimal(funds);
         setFunds(bd);
     }
+
     public String getAccountNumber(){
         return accountNumber;
     }
@@ -64,10 +69,16 @@ public class Account extends BaseModel{
         this.accountNumber = accountNumber;
     }
 
+    /** This method setting up random bank account number. Shouldn't be there, but simplicity first. */
     public void setRandomAccountNumber(){
         setAccountNumber(new AccountNumberGenerator().generate());
     }
 
+    /**
+     * Method for bank account top up. 
+     * @param <T> any number type
+     * @param transferSum sum of transfer
+     */
     public <T extends Number> void addFunds(T transferSum) {
         BigDecimal currentTransfer = new BigDecimal(transferSum.toString());
         try {
@@ -81,6 +92,11 @@ public class Account extends BaseModel{
         }
     }   
     
+    /**
+     * Method for bank account withdrawal.
+     * @param <T> any number type
+     * @param transferSum sum of withdrawal
+     */
     public <T extends Number> void withdrawFunds(T transferSum) {
         BigDecimal currentTransfer = new BigDecimal(transferSum.toString());
         try {

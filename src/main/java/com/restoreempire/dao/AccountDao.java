@@ -8,12 +8,15 @@ import java.util.Map;
 
 import com.restoreempire.model.Account;
 
+
+/** DAO of Client model */
 public class AccountDao extends BaseDao<Account>{
 
+    /** Table name in database table */
     private final static String tableName = "account";
 
     @Override
-    public Map<String, Object> serialized(Account account) {
+    protected Map<String, Object> serialized(Account account) {
         var map = new HashMap<String, Object>();
         if(account.getId() != 0)
             map.put("id", account.getId());

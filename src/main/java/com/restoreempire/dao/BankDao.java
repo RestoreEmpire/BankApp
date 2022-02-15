@@ -9,8 +9,10 @@ import java.util.Map;
 import com.restoreempire.model.Bank;
 import com.restoreempire.service.validators.Validation;
 
+/** DAO of Bank model */
 public class BankDao extends BaseDao<Bank> {
 
+    /** Table name in database table */
     private final static String tableName = "bank";
 
     @Override
@@ -54,7 +56,8 @@ public class BankDao extends BaseDao<Bank> {
         }
     }
 
-    public Map<String, Object> serialized(Bank bank){
+    @Override
+    protected Map<String, Object> serialized(Bank bank){
         Map<String, Object> map = new HashMap<>();
         if (bank.getId() != 0)
             map.put("id", bank.getId());

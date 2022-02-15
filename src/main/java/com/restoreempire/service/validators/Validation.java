@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import com.restoreempire.exceptions.AccountFundsValidationException;
 import com.restoreempire.exceptions.IdValidationException;
 import com.restoreempire.exceptions.NameValidationException;
-import com.restoreempire.logging.Logger;
 
 
 
@@ -52,20 +51,13 @@ public class Validation  {
     /**
      * Валидация ID
      */
-    public static boolean validateId(String id) {
+    public static boolean validateId(String id, int size) throws IdValidationException {
 
-        try {
-            if(id.length() != 12) throw new IdValidationException("Wrong id length or type"); // должно быть 16 символов в ID
+            if(id.length() != size) throw new IdValidationException("Wrong id length or type"); // должно быть 16 символов в ID
             for(char c : id.toCharArray()){
                 if(!Character.isDigit(c)) throw new IdValidationException("ID should consist of digits"); // только цифры
             }
             return true;
-        } 
-        catch (Exception e) {
-            e.printStackTrace();
-            Logger.write(e.getMessage(), Logger.Status.ERROR);
-            return false;
-        }
     }
     
     public static boolean isNullOrEmpty(String string) {

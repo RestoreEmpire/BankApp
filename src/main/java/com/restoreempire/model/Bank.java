@@ -1,5 +1,6 @@
 package com.restoreempire.model;
 
+/** Model that represents bank */
 public class Bank extends BaseModel {
     
     private String name;

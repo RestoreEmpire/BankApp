@@ -16,9 +16,8 @@
     <maven.compiler.release>17</maven.compiler.release>
   </properties>
   <packaging>war</packaging>
-
+  
   <dependencies>
-
     <dependency>
       <groupId>jakarta.servlet.jsp.jstl</groupId>
       <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>

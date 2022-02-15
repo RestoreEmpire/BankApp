@@ -6,14 +6,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Collection;
 import java.util.Map;
+
 import com.restoreempire.model.BaseModel;
 
 
 import com.restoreempire.logging.Logger;
 
+/**
+ * This class provides methods that used in other Data access object classes.
+ * Also, basic methods automatically connected to database.
+ * Before you start working with project, you need to change default JDBC connection properties,
+ * that provided in this class.
+ */
 abstract class BaseDao<T extends BaseModel> implements Dao<T> {
-
-
 
     /**
      * Database name
@@ -42,7 +47,7 @@ abstract class BaseDao<T extends BaseModel> implements Dao<T> {
         String keys = String.join(", ", data.keySet().toArray(new String[0]));
         Collection<Object> values = data.values();
         int size = data.size();
-        String q = extracted(size);
+        String q = questionMarks(size);
         String statement = String.format("insert into %s(%s) values (%s)" , tableName, keys, q);
         try (Connection connection = DriverManager.getConnection(connectionUrl,dbUser, dbPassword)) {
             PreparedStatement insert = connection.prepareStatement(statement);
@@ -58,7 +63,6 @@ abstract class BaseDao<T extends BaseModel> implements Dao<T> {
         }
 
     }
-
 
     /**
      * Return {@code ResultSet} of element with id that equals {@code id}
@@ -110,6 +114,12 @@ abstract class BaseDao<T extends BaseModel> implements Dao<T> {
         }
     }
 
+    /**
+     * Return {@code ResultSet} of all database elements in table {@code tablename}
+     * @param tableName name of table in database
+     * @return (1) {@code ResultSet} of elements with specified {@code id} in table {@code tableName} or
+     * (2) null if rows not exist in database table
+     */
     protected static ResultSet selectAll(String tableName) {
         try (Connection connection = DriverManager.getConnection(connectionUrl, dbUser, dbPassword)) {
             PreparedStatement selectAll = connection.prepareStatement(
@@ -130,9 +140,6 @@ abstract class BaseDao<T extends BaseModel> implements Dao<T> {
         }
     }
 
-
-
-
     /**
      * Update element of database table {@code tableName} at {@code id} with data from dictionary {@code data}
      * @param tableName name of database table
@@ -143,7 +150,7 @@ abstract class BaseDao<T extends BaseModel> implements Dao<T> {
         String keys = String.join(", ", data.keySet().toArray(new String[0]));
         Collection<Object> values = data.values();
         int size = data.size();
-        String q = extracted(size);
+        String q = questionMarks(size);
         String statement = String.format(
             "update %s set (%s) = (%s) where id = %d",
             tableName,
@@ -166,8 +173,14 @@ abstract class BaseDao<T extends BaseModel> implements Dao<T> {
 
     }
 
-
-    private String extracted(int size) {
+    /**
+     * Return {@code String} of question marks, separated by commas.
+     * This trick is used to simplify methods that used in derived classes.
+     * So, no SQL-required! And no SQL injection danger.
+     * @param size
+     * @return String of question marks that separated with comma
+     */
+    private String questionMarks(int size) {
         String q = String.join(", ","?".repeat(size).split(""));
         return q;
     }
@@ -188,5 +201,13 @@ abstract class BaseDao<T extends BaseModel> implements Dao<T> {
         }
     }
 
+    /**
+     * Return {@code Map<String, Object>} of {@code model} object's fields, where key {@code String} is
+     * database column name and value {@code Object} is representation of database's row values.
+     * This method is used to simplify database connectivity.
+     * @param model object
+     * @return {@code Map<String, Object>} of {@code model} object fields
+     */
+    abstract protected Map<String, Object> serialized(T model);
     
 }

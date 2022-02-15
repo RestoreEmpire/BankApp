@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import com.restoreempire.service.validators.Validation;
 import com.restoreempire.service.validators.Validation.nameType;
 
+
+/** Model that represents any person. Contains name and birthdate */
 public abstract class Person extends BaseModel {
 
     private String firstName;
@@ -12,8 +14,8 @@ public abstract class Person extends BaseModel {
     private String middlename;
     private LocalDate birthDate;
 
-    public void setFirstName(String name) {
-        this.firstName = Validation.validateName(name, nameType.FIRST) ? name : firstName;
+    public void setFirstName(String firstName) {
+        this.firstName = Validation.validateName(firstName, nameType.FIRST) ? firstName : this.firstName;
     }
 
     public String getFirstName() {
@@ -65,8 +67,6 @@ public abstract class Person extends BaseModel {
         setMiddlename(middlename);
         setBirthDate(birthDate);
     }
-
-
 
     @Override
     public String toString() {   
