@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.restoreempire.model.Bank;
-import com.restoreempire.processing.data.validators.Validation;
+import com.restoreempire.service.validators.Validation;
 
 public class BankDao extends BaseDao<Bank> {
 

@@ -3,7 +3,7 @@ package com.restoreempire.model;
 import java.time.LocalDate;
 
 import com.restoreempire.exceptions.ValidationException;
-import com.restoreempire.processing.data.generators.ClientIdGenerator;
+import com.restoreempire.service.generators.ClientIdGenerator;
 
 public class Client extends Person {
 

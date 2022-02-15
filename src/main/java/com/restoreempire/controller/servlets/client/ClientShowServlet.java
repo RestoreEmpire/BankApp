@@ -4,7 +4,8 @@ package com.restoreempire.controller.servlets.client;
 import com.restoreempire.dao.ClientDao;
 import com.restoreempire.dao.Dao;
 import com.restoreempire.model.Client;
-import com.restoreempire.processing.data.validators.Validation;
+import com.restoreempire.service.ModelComparator;
+import com.restoreempire.service.validators.Validation;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -14,6 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @WebServlet(name="clientShow",urlPatterns={"/clients"})
@@ -21,12 +23,13 @@ public class ClientShowServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String pageIdParam = request.getParameter("page");
-        int pageId = Validation.isNullOrEmpty(pageIdParam) ? 1 : Integer.parseInt(pageIdParam);
-        int rows = 5;
         List<List<String>> clientsStringify = new ArrayList<>();
         List<Client> clients = new ClientDao().getAll();
+        String pageIdParam = request.getParameter("page");
+        int pageId = Validation.isNullOrEmpty(pageIdParam) ? 1 : Integer.parseInt(pageIdParam);
+        int rows = 10;
         int pages = ((clients.size() - 1) / rows) + 1;
+        Collections.sort(clients, new ModelComparator());
         for (int i = (pageId - 1) * rows; (i < pageId * rows) && (i < clients.size()); i++) {
             Client client = clients.get(i);
             var dict = new ArrayList<String>();

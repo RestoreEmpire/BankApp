@@ -7,7 +7,7 @@ import com.restoreempire.dao.ClientDao;
 import com.restoreempire.dao.Dao;
 import com.restoreempire.exceptions.ValidationException;
 import com.restoreempire.model.Client;
-import com.restoreempire.processing.data.validators.Validation;
+import com.restoreempire.service.validators.Validation;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

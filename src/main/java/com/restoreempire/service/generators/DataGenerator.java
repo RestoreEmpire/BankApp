@@ -1,4 +1,4 @@
-package com.restoreempire.processing.data.generators;
+package com.restoreempire.service.generators;
 
 abstract class DataGenerator {
 

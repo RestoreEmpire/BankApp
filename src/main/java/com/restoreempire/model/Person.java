@@ -2,8 +2,8 @@ package com.restoreempire.model;
 
 import java.time.LocalDate;
 
-import com.restoreempire.processing.data.validators.Validation;
-import com.restoreempire.processing.data.validators.Validation.nameType;
+import com.restoreempire.service.validators.Validation;
+import com.restoreempire.service.validators.Validation.nameType;
 
 public abstract class Person extends BaseModel {
 

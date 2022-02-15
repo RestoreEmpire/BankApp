@@ -4,7 +4,8 @@ package com.restoreempire.controller.servlets.account;
 import com.restoreempire.dao.AccountDao;
 import com.restoreempire.dao.Dao;
 import com.restoreempire.model.Account;
-import com.restoreempire.processing.data.validators.Validation;
+import com.restoreempire.service.ModelComparator;
+import com.restoreempire.service.validators.Validation;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -14,6 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @WebServlet(name="accountShow",urlPatterns={"/accounts"})
@@ -22,10 +24,11 @@ public class AccountShowServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         List<List<String>> values = new ArrayList<>();
-        List<Account> accounts = new AccountDao().getAll();
+        List<Account> accounts =  new AccountDao().getAll();
+        Collections.sort(accounts, new ModelComparator());
         String pageIdParam = request.getParameter("page");
         int pageId = Validation.isNullOrEmpty(pageIdParam) ? 1 : Integer.parseInt(pageIdParam);
-        int rows = 5;
+        int rows = 10;
         int pages = ((accounts.size() - 1) / rows) + 1;
         for (int i = (pageId - 1) * rows; (i < pageId * rows) && (i < accounts.size()); i++) {
             Account account = accounts.get(i);

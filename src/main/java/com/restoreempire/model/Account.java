@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 import com.restoreempire.exceptions.AccountFundsValidationException;
 import com.restoreempire.logging.Logger;
-import com.restoreempire.processing.data.generators.AccountNumberGenerator;
-import com.restoreempire.processing.data.validators.Validation;
+import com.restoreempire.service.generators.AccountNumberGenerator;
+import com.restoreempire.service.validators.Validation;
 
 public class Account extends BaseModel{
 

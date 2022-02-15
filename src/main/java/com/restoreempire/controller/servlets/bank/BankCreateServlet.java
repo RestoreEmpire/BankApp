@@ -4,7 +4,7 @@ package com.restoreempire.controller.servlets.bank;
 import com.restoreempire.dao.BankDao;
 import com.restoreempire.exceptions.ValidationException;
 import com.restoreempire.model.Bank;
-import com.restoreempire.processing.data.validators.Validation;
+import com.restoreempire.service.validators.Validation;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

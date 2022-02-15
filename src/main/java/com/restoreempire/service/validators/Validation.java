@@ -1,4 +1,4 @@
-package com.restoreempire.processing.data.validators;
+package com.restoreempire.service.validators;
 import java.math.BigDecimal;
 
 import com.restoreempire.exceptions.AccountFundsValidationException;
