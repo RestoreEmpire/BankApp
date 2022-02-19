@@ -15,28 +15,38 @@ public class ClientDao extends BaseDao<Client> {
     private final static String tableName = "client";
 
     @Override
-    protected Map<String,Object> serialized(Client client){
+    public String getTableName() {
+        return tableName;
+    }
+
+    @Override
+    public Map<String, Object> serialized(Client client){
         var map = new HashMap<String, Object>();
+        var keys = getKeys();
         if (client.getId() != 0)
-            map.put("id", client.getId());
-        map.put("client_number", client.getClientNumber());
-        map.put("surname", client.getSurname());
-        map.put("first_name", client.getFirstName());
-        map.put("middle_name", client.getMiddlename());
-        map.put("birthdate", client.getBirthDate());
+            map.put(keys[0], client.getId());
+        map.put(keys[1], client.getClientNumber());
+        map.put(keys[2], client.getSurname());
+        map.put(keys[3], client.getFirstName());
+        map.put(keys[4], client.getMiddlename());
+        map.put(keys[5], client.getBirthDate());
         return map;
 
     }
 
+    public String[] getKeys(){
+        return new String[]{"id", "client_number", "surname", "first_name", "middle_name", "birthdate"};
+    } 
+
     @Override
     public void create(Client client) {
-        insert(tableName, serialized(client));
+        insert(client);
     }
 
     @Override
     public Client read(long id) {
         Client client = new Client();
-        try (ResultSet rs = select(tableName, id)) {
+        try (ResultSet rs = select(id)) {
             client.setId(rs.getLong("id"));
             client.setClientNumber(rs.getString("client_number"));
             client.setSurname(rs.getString("surname"));
@@ -51,7 +61,7 @@ public class ClientDao extends BaseDao<Client> {
     
     public List<Client> getAll() {
         List<Client> list = new ArrayList<>();
-        try(ResultSet rs = selectAll(tableName)) {
+        try(ResultSet rs = selectAll()) {
             while(rs.next()){
                 Client client = new Client(
                     rs.getLong("id"),
@@ -70,12 +80,12 @@ public class ClientDao extends BaseDao<Client> {
     }
 
     @Override
-    public void update(Client updated, Client updating) {
-        dbUpdate(tableName, updated.getId(), serialized(updating));
+    public void update(long id, Client updating) {
+        dbUpdate(id, updating);
     }
 
     @Override
     public void delete(Client client) {
-        dbDelete(tableName, client.getId());
+        dbDelete(client.getId());
     }
 }

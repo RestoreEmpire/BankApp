@@ -19,4 +19,14 @@ public abstract class BaseModel {
             this.id = id;
     }
 
+    /**
+     * Return {@code Map<String, Object>} of {@code model} object's fields, where key {@code String} is
+     * database column name and value {@code Object} is representation of database's row values.
+     * This method is used to simplify database connectivity.
+     * @param model object
+     * @return {@code Map<String, Object>} of {@code model} object fields
+     */
+
+
+
 }

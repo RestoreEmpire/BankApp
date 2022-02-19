@@ -1,4 +1,4 @@
-package com.restoreempire.service;
+package com.restoreempire.service.parser;
 
 import java.io.BufferedWriter;
 import java.io.File;

@@ -13,17 +13,25 @@ import com.restoreempire.service.validators.Validation;
 public class BankDao extends BaseDao<Bank> {
 
     /** Table name in database table */
-    private final static String tableName = "bank";
+    
+    @Override
+    public String getTableName() {
+        return "bank";
+    }
+
+    public String[] getKeys(){
+        return new String[]{"id", "name"};
+    }
 
     @Override
     public void create(Bank bank) {
-        insert(tableName, serialized(bank));
+        insert(bank);
     }
 
     @Override
     public Bank read(long id) {
         Bank bank = new Bank();
-        try(ResultSet rs = select(tableName,id)){
+        try(ResultSet rs = select(id)){
             bank.setId(rs.getLong("id"));
             bank.setName(rs.getString("name"));
             return bank;
@@ -33,19 +41,19 @@ public class BankDao extends BaseDao<Bank> {
     }
 
     @Override
-    public void update(Bank updated, Bank updating) {
-        dbUpdate(tableName, updated.getId(), serialized(updating));        
+    public void update(long id, Bank updating) {
+        dbUpdate(id, updating);        
     }
 
     @Override
     public void delete(Bank bank) {
-        dbDelete(tableName, bank.getId());
+        dbDelete(bank.getId());
     }
 
     @Override
     public List<Bank> getAll() {
         List<Bank> list = new ArrayList<>();
-        try(ResultSet rs = selectAll(tableName)) {
+        try(ResultSet rs = selectAll()) {
             while(rs.next()){
                 Bank bank = new Bank(rs.getLong("id"), rs.getString("name"));
                 list.add(bank);
@@ -57,12 +65,13 @@ public class BankDao extends BaseDao<Bank> {
     }
 
     @Override
-    protected Map<String, Object> serialized(Bank bank){
+    public Map<String, Object> serialized(Bank bank){
         Map<String, Object> map = new HashMap<>();
+        var keys = getKeys();
         if (bank.getId() != 0)
-            map.put("id", bank.getId());
+            map.put(keys[0], bank.getId());
         if (!Validation.isNullOrEmpty(bank.getName()))
-            map.put("name", bank.getName());
+            map.put(keys[1], bank.getName());
         return map;
     }
 }

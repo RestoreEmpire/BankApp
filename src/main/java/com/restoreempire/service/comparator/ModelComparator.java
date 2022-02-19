@@ -1,4 +1,4 @@
-package com.restoreempire.service;
+package com.restoreempire.service.comparator;
 
 import java.util.Comparator;
 

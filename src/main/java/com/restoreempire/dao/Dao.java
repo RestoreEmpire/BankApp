@@ -1,6 +1,8 @@
 package com.restoreempire.dao;
 
 import java.util.List;
+import java.util.Map;
+
 import com.restoreempire.model.BaseModel;
 
 /**
@@ -29,7 +31,7 @@ public interface Dao<T extends BaseModel> {
      *  @param updated object that will be replaced
      *  @param updating object that updates {@code updated} object fields with its own fields
      */
-    public void update(T updated, T updating);
+    public void update(long id, T updating);
 
     /**
      * Delete object's {@code model} entry from database, if it exists.
@@ -43,5 +45,12 @@ public interface Dao<T extends BaseModel> {
      * @return {@code List<T>} of all database entries, represented as objects
      */
     public List<T> getAll();
+
+    public String getTableName();
+
+    public Map<String,Object> serialized(T model);
+
+    public String[] getKeys();
+
 
 }

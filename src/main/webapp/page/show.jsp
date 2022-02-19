@@ -21,14 +21,18 @@
                             <td>${item}</td>
                         </c:forEach>
                         <td class="col-2">
-                            <form method="post">
-                                <button class="btn btn-primary" name="change" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Change this entry" value="${row[0]}">
-                                    <i class="fa-solid fa-pen-to-square"></i>
-                                </button>
-                                <button class="btn btn-primary" name="delete" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete this entry" value="${row[0]}">
-                                    <i class="fa-solid fa-trash-can"></i>
-                                </button>
-                            </form>
+                            <div class="row">
+                                <form class="col-md-3" method="get">
+                                    <button class="btn btn-primary" name="change" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Change this entry" value="${row[0]}">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </button>
+                                </form>
+                                <form class="col-md-3" method="post">
+                                    <button class="btn btn-primary" name="delete" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete this entry" value="${row[0]}">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 </c:forEach>

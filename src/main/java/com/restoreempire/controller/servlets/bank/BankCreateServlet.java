@@ -1,10 +1,13 @@
 package com.restoreempire.controller.servlets.bank;
 
 
+import java.io.IOException;
+
 import com.restoreempire.dao.BankDao;
-import com.restoreempire.exceptions.ValidationException;
+import com.restoreempire.dao.Dao;
 import com.restoreempire.model.Bank;
-import com.restoreempire.service.validators.Validation;
+import com.restoreempire.service.BankService;
+import com.restoreempire.service.Service;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -12,10 +15,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.io.IOException;
-
 @WebServlet(name="bankCreate",urlPatterns={"/banks/create"})
 public class BankCreateServlet extends HttpServlet {
+    
+    Dao<Bank> dao = new BankDao();
+    Service<Bank> service = new BankService(dao);
+    
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -26,12 +31,7 @@ public class BankCreateServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (!Validation.isNullOrEmpty(req.getParameter("name"))){
-            String name = req.getParameter("name");
-            Bank bank = new Bank(name);
-            new BankDao().create(bank);
-            resp.sendRedirect("/banks");
-        } else throw new ValidationException("Wrong form input");
-        
+            service.create(service.setParams(req.getParameterMap()));
+            resp.sendRedirect("/banks");    
     }
 }

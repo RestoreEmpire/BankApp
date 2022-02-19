@@ -1,10 +1,13 @@
 package com.restoreempire.controller.servlets.bank;
 
 
+import java.io.IOException;
+
 import com.restoreempire.dao.BankDao;
 import com.restoreempire.dao.Dao;
 import com.restoreempire.model.Bank;
-import com.restoreempire.service.ModelComparator;
+import com.restoreempire.service.BankService;
+import com.restoreempire.service.Service;
 import com.restoreempire.service.validators.Validation;
 
 import jakarta.servlet.ServletException;
@@ -13,47 +16,38 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 @WebServlet(name="bankShow",urlPatterns={"/banks"})
 public class BankShowServlet extends HttpServlet {
 
+    private final Dao<Bank> dao= new BankDao();
+    private final Service<Bank> service = new BankService(dao);
+
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        List<List<String>> banksStringify = new ArrayList<>();
-        List<Bank> banks = new BankDao().getAll();
-        Collections.sort(banks, new ModelComparator());
-        String pageIdParam = request.getParameter("page");
-        int pageId = Validation.isNullOrEmpty(pageIdParam) ? 1 : Integer.parseInt(pageIdParam);
-        int rows = 5;
-        int pages = ((banks.size() - 1) / rows) + 1;
-        for (int i = (pageId - 1) * rows; (i < pageId * rows) && (i < banks.size()); i++) {
-            Bank bank = banks.get(i);
-            var bankDict = new ArrayList<String>();
-            bankDict.add(String.valueOf(bank.getId()));
-            bankDict.add(bank.getName());
-            banksStringify.add(bankDict);
+        if(!Validation.isNullOrEmpty(request.getParameter("change"))) {
+            response.sendRedirect("/banks/p?&id=" + request.getParameter("change"));
         }
-
-        String[] keys = new String[]{"ID", "Name"};
+        else{
+        String pageIdParam = request.getParameter("page");
+        int page = Validation.isNullOrEmpty(pageIdParam) ? 1 : Integer.parseInt(pageIdParam);
+        int rows = 10;
+        int pages = service.getPageCount(rows);
+        var keys = dao.getKeys();
+        var values = service.pagination(page, rows);  
         request.setAttribute("pages", pages);
         request.setAttribute("keys", keys);
-        request.setAttribute("values", banksStringify);
+        request.setAttribute("values", values);
         request.setAttribute("title", "Banks");
         getServletContext().getRequestDispatcher("/page/show.jsp").forward(request, response);
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if(!Validation.isNullOrEmpty(req.getParameter("change"))) {
-            resp.sendRedirect("/banks/p?&id=" + req.getParameter("change"));
-        }
+
         if (!Validation.isNullOrEmpty(req.getParameter("delete"))) {
             int id = Integer.valueOf(req.getParameter("delete"));
-            Dao<Bank> dao = new BankDao();
             Bank bank = dao.read(id);
             dao.delete(bank);
             resp.sendRedirect("/banks");
