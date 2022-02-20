@@ -184,9 +184,10 @@ abstract class BaseDao<T extends BaseModel> implements Dao<T>{
      * @param id of element in database
      */
     protected void dbDelete(long id){
-        String statement = String.format("delete from %s where id = %d", getTableName(), id);
+        String statement = String.format("delete from %s where id = ?", getTableName());
         try (Connection connection = DriverManager.getConnection(connectionUrl, dbUser, dbPassword)) {
             PreparedStatement delete = connection.prepareStatement(statement);
+            delete.setLong(1, id);
             delete.executeUpdate();
         } catch (Exception e) {
             Logger.write(e.getMessage(), Logger.Status.WARNING);

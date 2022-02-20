@@ -59,4 +59,5 @@ public class BankServiceTest {
         Assertions.assertThrows(ValidationException.class, () -> bank.setName(null));
         Assertions.assertDoesNotThrow(() -> bank.setName("bank"));
     }
+
 }

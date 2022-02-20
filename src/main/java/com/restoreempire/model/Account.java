@@ -3,6 +3,7 @@ package com.restoreempire.model;
 import java.math.BigDecimal;
 
 import com.restoreempire.exceptions.AccountFundsValidationException;
+import com.restoreempire.exceptions.ValidationException;
 import com.restoreempire.logging.Logger;
 import com.restoreempire.service.generators.AccountNumberGenerator;
 import com.restoreempire.service.validators.Validation;
@@ -37,7 +38,9 @@ public class Account extends BaseModel{
     }
 
     public void setClientId(Long clientId) {
-        this.clientId = clientId;
+        if (clientId > 1)
+            this.clientId = clientId;
+        else throw new ValidationException("Id can't be less than 1");
     }
 
     public Long getBankId() {
@@ -45,7 +48,9 @@ public class Account extends BaseModel{
     }
 
     public void setBankId(Long bankId) {
-        this.bankId = bankId;
+        if (bankId > 1)
+            this.bankId = bankId;
+        else throw new ValidationException("Id can't be less than 1");
     }
 
     public BigDecimal getFunds(){
@@ -66,7 +71,8 @@ public class Account extends BaseModel{
     }
 
     public void setAccountNumber(String accountNumber){
-        this.accountNumber = accountNumber;
+
+        this.accountNumber = Validation.validateId(accountNumber, 16) ? accountNumber : this.accountNumber;
     }
 
     /** This method setting up random bank account number. Shouldn't be there, but simplicity first. */
