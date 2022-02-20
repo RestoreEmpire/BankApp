@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
+
+/** Simple logger */
 public class Logger {
 
     public enum Status{OK,ERROR, WARNING};

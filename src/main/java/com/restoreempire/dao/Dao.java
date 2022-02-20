@@ -25,8 +25,8 @@ public interface Dao<T extends BaseModel> {
     public T read(long id);
 
     /**
-     *  Update object's {@code updated} entry from database with {@code updating} object.
-     *  That means {@code updating} object's fields will replace {@code updated} object's fields
+     *  Update entry of object with id {@code id} with {@code updating} object.
+     *  That means not null {@code updating} object's fields will replace {@code updated} object's fields
      *  and than it will be written in the database.
      *  @param updated object that will be replaced
      *  @param updating object that updates {@code updated} object fields with its own fields
@@ -46,10 +46,26 @@ public interface Dao<T extends BaseModel> {
      */
     public List<T> getAll();
 
+    /**
+     * Return name of database table.
+     * @return name of database table.
+     */
     public String getTableName();
 
+    
+    /**
+     * Return {@code Map<String, Object>} of {@code model} object's fields, where key {@code String} is
+     * database column name and value {@code Object} is representation of database's row values.
+     * This method is used to simplify database connectivity.
+     * @param model object
+     * @return {@code Map<String, Object>} of {@code model} object fields
+     */
     public Map<String,Object> serialized(T model);
 
+    /**
+     * Return column names of database table that represent object. 
+     * @return column names of database tabel.
+     */
     public String[] getKeys();
 
 

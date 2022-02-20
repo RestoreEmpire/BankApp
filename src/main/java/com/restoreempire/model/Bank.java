@@ -1,5 +1,8 @@
 package com.restoreempire.model;
 
+import com.restoreempire.exceptions.ValidationException;
+import com.restoreempire.service.validators.Validation;
+
 /** Model that represents bank */
 public class Bank extends BaseModel {
     
@@ -23,7 +26,12 @@ public class Bank extends BaseModel {
     }
 
     public void setName(String name) {
-        this.name = name;
+        if(Validation.isNullOrEmpty(name))
+            throw new ValidationException("Name is null or empty");
+        if(name.length() > 128)
+            throw new ValidationException("Name is to long. It should be below 128 characters");
+        else
+            this.name = name; 
     }
 
     @Override

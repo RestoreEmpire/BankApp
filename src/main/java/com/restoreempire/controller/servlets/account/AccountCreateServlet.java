@@ -28,9 +28,9 @@ public class AccountCreateServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().removeAttribute("account");
-        List<Bank> banks = new BankDao().getAll();
-        List<Client> clients = new ClientDao().getAll();
+        getServletContext().removeAttribute("account"); // removing object from updating page servlet, because this servlet uses same jsp
+        List<Bank> banks = new BankDao().getAll(); // list of banks. We need to display them because it is a foreign key
+        List<Client> clients = new ClientDao().getAll(); // client is a foreign key too 
         req.setAttribute("banks", banks);
         req.setAttribute("clients", clients);
         getServletContext().getRequestDispatcher("/page/account.jsp").forward(req, resp);

@@ -27,7 +27,7 @@
                 <input type="text" class="form-control" id="clientMiddleName" name="middlename" value="${client.middlename}" required>
             </div>
             <div class="mb-3 form-check">
-                <input onclick='disableContent("clientMiddleName")' type="checkbox" class="form-check-input" id="clientNumberCheck" name="nomiddlename" required>
+                <input onclick='disableContent("clientMiddleName")' type="checkbox" class="form-check-input" id="clientNumberCheck" name="nomiddlename">
                 <label class="form-check-label" for="middlenameCheck">There is no middle name</label>
               </div>
             <div class="mb-3">

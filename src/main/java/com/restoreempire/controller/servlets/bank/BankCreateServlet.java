@@ -24,7 +24,7 @@ public class BankCreateServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        getServletContext().removeAttribute("bank");
+        getServletContext().removeAttribute("bank"); // removing object from updating page servlet, because this servlet uses same jsp
         req.setAttribute("title", "Bank | Create");
         getServletContext().getRequestDispatcher("/page/bank.jsp").forward(req, resp);
     }

@@ -25,8 +25,8 @@ public class ClientPageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         if(!Validation.isNullOrEmpty(req.getParameter("id"))) {
-            Client client = new ClientDao().read(Long.parseLong(req.getParameter("id")));
-            req.setAttribute("client", client);
+            Client client = dao.read(Long.parseLong(req.getParameter("id")));
+            getServletContext().setAttribute("client", client); // use this to prevent id substitution in the parameter
             req.setAttribute("title", client.getClientNumber());
         }
         getServletContext().getRequestDispatcher("/page/client.jsp").forward(req, resp);
@@ -34,9 +34,8 @@ public class ClientPageServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Client client = (Client) req.getAttribute("client");  
+        Client client = (Client) getServletContext().getAttribute("client");  
         service.update(client, service.setParams(req.getParameterMap()));
-        getServletContext().removeAttribute("client");
         resp.sendRedirect("/clients");
 
     }

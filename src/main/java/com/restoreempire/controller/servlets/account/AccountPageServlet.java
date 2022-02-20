@@ -22,7 +22,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 
-@WebServlet(name="accountPage", urlPatterns = "/accounts/p")
+@WebServlet(name="accountUpdate", urlPatterns = "/accounts/p")
 public class AccountPageServlet extends HttpServlet {
 
     Dao<Account> dao = new AccountDao();
@@ -31,14 +31,14 @@ public class AccountPageServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Bank> banks = new BankDao().getAll();
-        List<Client> clients = new ClientDao().getAll();
+        List<Bank> banks = new BankDao().getAll(); // list of banks. We need to display them because it is a foreign key
+        List<Client> clients = new ClientDao().getAll(); // client is a foreign key too 
         req.setAttribute("banks", banks);
         req.setAttribute("clients", clients);
-        if(!Validation.isNullOrEmpty(req.getParameter("id"))){
+        if(!Validation.isNullOrEmpty(req.getParameter("id"))){ 
             Account account = dao.read(Long.parseLong(req.getParameter("id")));
-            getServletContext().setAttribute("account", account); 
-            req.setAttribute("title", account.getAccountNumber());
+            getServletContext().setAttribute("account", account); // use this to prevent id substitution in the parameter
+            req.setAttribute("title", account.getAccountNumber()); 
             req.setAttribute("defaultBank", new BankDao().read(account.getBankId()));
             req.setAttribute("defaultClient", new ClientDao().read(account.getClientId()));
         }
@@ -47,9 +47,8 @@ public class AccountPageServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ValidationException {
-        Account retAccount = (Account) getServletContext().getAttribute("account");
-        service.update(retAccount, service.setParams(req.getParameterMap()));
-        getServletContext().removeAttribute("account");
+        Account account = (Account) getServletContext().getAttribute("account");
+        service.update(account, service.setParams(req.getParameterMap()));
         resp.sendRedirect("/accounts");
 
     }

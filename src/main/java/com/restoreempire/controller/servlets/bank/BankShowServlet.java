@@ -25,16 +25,16 @@ public class BankShowServlet extends HttpServlet {
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        if(!Validation.isNullOrEmpty(request.getParameter("change"))) {
-            response.sendRedirect("/banks/p?&id=" + request.getParameter("change"));
+        if(!Validation.isNullOrEmpty(request.getParameter("change"))) { // change button, value is id
+            response.sendRedirect("/banks/p?&id=" + request.getParameter("change")); // redirect to update page
         }
         else{
-        String pageIdParam = request.getParameter("page");
-        int page = Validation.isNullOrEmpty(pageIdParam) ? 1 : Integer.parseInt(pageIdParam);
-        int rows = 10;
-        int pages = service.getPageCount(rows);
+        String pageIdParam = request.getParameter("page"); // current page
+        int page = Validation.isNullOrEmpty(pageIdParam) ? 1 : Integer.parseInt(pageIdParam);  //if page is null, then it's first
+        int rows = 10; // elements on page
+        int pages = service.getPageCount(rows); // number of pages
         var keys = dao.getKeys();
-        var values = service.pagination(page, rows);  
+        var values = service.pagination(page, rows);  // elements of current page
         request.setAttribute("pages", pages);
         request.setAttribute("keys", keys);
         request.setAttribute("values", values);
@@ -46,7 +46,7 @@ public class BankShowServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        if (!Validation.isNullOrEmpty(req.getParameter("delete"))) {
+        if (!Validation.isNullOrEmpty(req.getParameter("delete"))) { // delete button
             int id = Integer.valueOf(req.getParameter("delete"));
             Bank bank = dao.read(id);
             dao.delete(bank);

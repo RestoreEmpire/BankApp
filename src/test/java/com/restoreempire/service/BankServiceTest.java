@@ -1,6 +1,5 @@
 package com.restoreempire.service;
 
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -14,9 +13,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 
@@ -29,7 +25,7 @@ public class BankServiceTest {
     Map<String,String[]> map1 = Map.ofEntries(Map.entry("name", new String[]{"name"}));
     Map<String,String[]> map2 = Map.ofEntries(Map.entry("noname", new String[]{"name"}));
     @Mock BankService service2;
-    BankService service = new BankService(dao);
+    
     
     
     
@@ -37,6 +33,7 @@ public class BankServiceTest {
     @Test
     void testCreation() {
         Bank bank = new Bank("name");
+        BankService service = new BankService(dao);
 
         Assertions.assertEquals(bank.getName(), service.setParams(map1).getName());
         Assertions.assertThrows(ValidationException.class,() -> service.setParams(map2));
@@ -46,11 +43,20 @@ public class BankServiceTest {
 
     @Test
     void testUpdate() {
-        // Bank updating = new Bank("Test");
-        // Bank updated = service.setParams(map1);
-        // updated.setId(1);
-        // service.update(updated, updating);
-        // verify(dao, times(1)).update(updated.getId(), updating);
+        BankService service = new BankService(dao);
+        Bank updating = new Bank("Test");
+        Bank updated = service.setParams(map1);
+        updated.setId(1);
+        service.update(updated, updating);
+        verify(dao, times(1)).update(updated.getId(), updating);
+    }
 
+    @Test
+    void testNameValidation() {
+        Bank bank = new Bank();
+        Assertions.assertThrows(ValidationException.class, () -> bank.setName(""));
+        Assertions.assertThrows(ValidationException.class, () -> bank.setName("a".repeat(130)));
+        Assertions.assertThrows(ValidationException.class, () -> bank.setName(null));
+        Assertions.assertDoesNotThrow(() -> bank.setName("bank"));
     }
 }

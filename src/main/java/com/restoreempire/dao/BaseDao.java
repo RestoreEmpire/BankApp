@@ -35,9 +35,8 @@ abstract class BaseDao<T extends BaseModel> implements Dao<T>{
     private final static String connectionUrl = "jdbc:postgresql://localhost:5432/" + database;
 
     /**
-     * Create a row in database table with name {@code tableName} from data in dictionary {@code data}
-     * @param tableName name of database table
-     * @param data dictionary with data to insertion
+     * Create a row in database table with name {@code tableName} from object {@code model}
+     * @param model object that represents database table
      */
     protected void insert(T model){
         var map = serialized(model);
@@ -63,7 +62,6 @@ abstract class BaseDao<T extends BaseModel> implements Dao<T>{
 
     /**
      * Return {@code ResultSet} of element with id that equals {@code id}
-     * @param tableName name of database table
      * @param id of element in table
      * @return (1) {@code ResultSet} of element with specified {@code id} in table {@code tableName} or
      * (2) null if a row not exist in database table
@@ -89,7 +87,6 @@ abstract class BaseDao<T extends BaseModel> implements Dao<T>{
 
     /**
      * Return {@code ResultSet} of database elements was found by SQL-query {@code query}
-     * @param tableName name of table in database
      * @param query sql query
      * @return (1) {@code ResultSet} of elements with specified {@code id} in table {@code tableName} or
      * (2) null if rows not exist in database table
@@ -112,7 +109,6 @@ abstract class BaseDao<T extends BaseModel> implements Dao<T>{
 
     /**
      * Return {@code ResultSet} of all database elements in table {@code tablename}
-     * @param tableName name of table in database
      * @return (1) {@code ResultSet} of elements with specified {@code id} in table {@code tableName} or
      * (2) null if rows not exist in database table
      */
@@ -137,10 +133,9 @@ abstract class BaseDao<T extends BaseModel> implements Dao<T>{
     }
 
     /**
-     * Update element of database table {@code tableName} at {@code id} with data from dictionary {@code data}
-     * @param tableName name of database table
+     * Update element of database table {@code tableName} at {@code id} with object {@code model}
      * @param id id of element in database
-     * @param data dictionary with data to insertion
+     * @param model dictionary with data to insertion
      */
     protected void dbUpdate(long id, T model) {
         var map = serialized(model);
@@ -149,7 +144,7 @@ abstract class BaseDao<T extends BaseModel> implements Dao<T>{
         int size = map.size();
         String q = questionMarks(size);
         String statement = String.format(
-            "update %s set (%s) = (%s) where id = ?",
+            "update %s set (%s) = (select %s) where id = ?",
             getTableName(),
             keys,
             q
@@ -197,7 +192,4 @@ abstract class BaseDao<T extends BaseModel> implements Dao<T>{
             Logger.write(e.getMessage(), Logger.Status.WARNING);
         }
     }
-
-
-    
 }

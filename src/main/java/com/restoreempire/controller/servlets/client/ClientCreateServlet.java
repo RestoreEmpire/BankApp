@@ -23,7 +23,7 @@ public class ClientCreateServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        getServletContext().removeAttribute("client");
+        getServletContext().removeAttribute("client"); // removing object from updating page servlet, because this servlet uses same jsp
         request.setAttribute("title", "Create | client");
         getServletContext().getRequestDispatcher("/page/client.jsp").forward(request, response);
     }

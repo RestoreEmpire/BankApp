@@ -25,8 +25,8 @@ public class BankPageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         if(!Validation.isNullOrEmpty(req.getParameter("id"))) {
-            Bank bank = new BankDao().read(Long.parseLong(req.getParameter("id")));
-            getServletContext().setAttribute("bank", bank);
+            Bank bank = dao.read(Long.parseLong(req.getParameter("id")));
+            getServletContext().setAttribute("bank", bank); // use this to prevent id substitution in the parameter
             req.setAttribute("title", bank.getName());
         }
         getServletContext().getRequestDispatcher("/page/bank.jsp").forward(req, resp);

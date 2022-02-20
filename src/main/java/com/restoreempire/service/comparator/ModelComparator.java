@@ -4,7 +4,7 @@ import java.util.Comparator;
 
 import com.restoreempire.model.BaseModel;
 
-/** Compares models by id */
+/** Compare models by id */
 public class ModelComparator implements Comparator<BaseModel> {
 
     @Override

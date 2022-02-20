@@ -9,7 +9,7 @@ import com.restoreempire.service.validators.Validation;
 
 /** Model that represents account.  
  * Contains bank account number, references to bank and client in db, 
- * and amount of money in the account.
+ * and store money in the account.
  */
 public class Account extends BaseModel{
 

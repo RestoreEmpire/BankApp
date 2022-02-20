@@ -21,8 +21,7 @@ public class BankService extends BaseService<Bank>{
     public Bank setParams(Map<String, String[]> map) throws ValidationException { 
         var resultMap = check(map);  
         if (!Validation.isNullOrEmpty(resultMap.get("name"))){
-            Bank replace = new Bank(resultMap.get("name"));
-            return replace;
+            return new Bank(resultMap.get("name"));
         }
         else throw 
             new ValidationException("Wrong form input");
