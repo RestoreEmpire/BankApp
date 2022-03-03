@@ -35,8 +35,8 @@ public class JpaConfig {
         return dataSource;
     }
 
-    @Bean(name = "entityManagerFactory")
-    public LocalContainerEntityManagerFactoryBean entityManager() {
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean entityManager =
         new LocalContainerEntityManagerFactoryBean();
         entityManager.setDataSource(dataSource());
