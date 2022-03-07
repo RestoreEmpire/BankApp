@@ -31,7 +31,7 @@ public class MainWebAppInitializer extends AbstractAnnotationConfigDispatcherSer
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[] {JpaConfig.class};
+        return new Class[] {PostgresJpaConfig.class};
         // return null;
     }
 

@@ -18,35 +18,35 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class UserController {
     
-    @Autowired
-    private UserRepositorty repo;
+    // @Autowired
+    // private UserRepositorty repo;
 
-    @GetMapping("/users")
-    @ResponseBody
-    public List<User> showUsers() { 
-        var users = repo.findAll();
-        return users;
-    }
+    // @GetMapping("/users")
+    // @ResponseBody
+    // public List<User> showUsers() { 
+    //     var users = repo.findAll();
+    //     return users;
+    // }
 
-    @GetMapping("/users/create")
-    public String showUserCreationForm(){
-        return "user_form";
-    }
+    // @GetMapping("/users/create")
+    // public String showUserCreationForm(){
+    //     return "user_form";
+    // }
 
-    @PostMapping("/users/create")
-    public String createNewUser(
-        @RequestParam String surname,
-        @RequestParam String firstname,
-        @RequestParam(required=false) String middlename,
-        @RequestParam Date birthdate
-    ){
-        @Valid User user = new User(
-            surname,
-            firstname,
-            middlename, 
-            birthdate
-        );
-        repo.save(user);
-        return "redirect:/users";         
-    }
+    // @PostMapping("/users/create")
+    // public String createNewUser(
+    //     @RequestParam String surname,
+    //     @RequestParam String firstname,
+    //     @RequestParam(required=false) String middlename,
+    //     @RequestParam Date birthdate
+    // ){
+    //     @Valid User user = new User(
+    //         surname,
+    //         firstname,
+    //         middlename, 
+    //         birthdate
+    //     );
+    //     repo.save(user);
+    //     return "redirect:/users";         
+    // }
 }

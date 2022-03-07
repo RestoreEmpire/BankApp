@@ -4,10 +4,11 @@ import java.util.Properties;
 
 import javax.persistence.EntityManagerFactory;
 
-import org.postgresql.Driver;
+import com.mysql.jdbc.Driver;
+
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -20,48 +21,43 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-// @ComponentScan("com.restoreempire.mvc")
-@EnableJpaRepositories("com.restoreempire.mvc.repository")
-public class JpaConfig {
+@EnableJpaRepositories(
+    basePackages = "com.restoreempire.mvc.repository.mysql", 
+    entityManagerFactoryRef = "mysqlEntityManagerFactory",
+    transactionManagerRef = "mysqlTransactionManager"
+)
+public class MysqlJpaConfig {
     
-
     @Bean
-    public DriverManagerDataSource dataSource(){
+    public DriverManagerDataSource mysqlDataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(Driver.class.getName());
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/mvcapp");
-        dataSource.setUsername("postgres");
-        dataSource.setPassword(System.getenv("POSTGRES_PASSWORD"));
+        dataSource.setUrl("jdbc:mysql://localhost:3306/mvcapp");
+        dataSource.setUsername("admin");
+        dataSource.setPassword(System.getenv("MYSQL_PASSWORD"));
         return dataSource;
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+    public LocalContainerEntityManagerFactoryBean mysqlEntityManagerFactory() {
         LocalContainerEntityManagerFactoryBean entityManager =
         new LocalContainerEntityManagerFactoryBean();
-        entityManager.setDataSource(dataSource());
+        entityManager.setDataSource(mysqlDataSource());
         entityManager.setPackagesToScan(new String[]{"com.restoreempire.mvc.model"});
         HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
-        adapter.setDatabase(Database.POSTGRESQL);
-        adapter.setGenerateDdl(true);
+        adapter.setDatabase(Database.MYSQL);
         entityManager.setJpaVendorAdapter(adapter);
         Properties properties = new Properties();
         properties.setProperty("hibernate.hbm2ddl.auto", "update");
-        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
-        properties.setProperty("hibernate.current_session_context_class","thread");
+        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
         entityManager.setJpaProperties(properties);
         return entityManager;
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
+    public PlatformTransactionManager mysqlTransactionManager() {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(emf);
+        transactionManager.setEntityManagerFactory(mysqlEntityManagerFactory().getObject());
         return transactionManager;
-    }
-
-    @Bean
-    public PersistenceExceptionTranslationPostProcessor exceptionTranslator(){
-        return new PersistenceExceptionTranslationPostProcessor();
     }
 }

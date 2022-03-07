@@ -20,6 +20,8 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <dependencies>
 
+
+    <!-- Spring boot starter dependencies -->
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter</artifactId>
@@ -42,16 +44,22 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
       <groupId>org.apache.tomcat.embed</groupId>
       <artifactId>tomcat-embed-jasper</artifactId>
       <version>9.0.59</version>
-  </dependency>
+    </dependency>
   
     
       <!-- <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-jetty</artifactId>
         <version>2.6.4</version>
-    </dependency> -->
+      </dependency> -->
     
+    <!-- <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-server</artifactId>
+      <version>${jetty.version}</version>
+    </dependency> -->
 
+    <!-- Hibernate dependencies -->
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
@@ -72,12 +80,21 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
     </dependency>
 
 
+    <!-- Database drivers -->
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
       <version>42.3.3</version>
     </dependency>
 
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>8.0.28</version>
+    </dependency>
+  
+
+    <!-- Spring core dependencies -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-core</artifactId>
@@ -90,44 +107,8 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
       <version>${spring.version}</version>
     </dependency>
 
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
-      <version>4.0.1</version>
-      <scope>provided</scope>
-  </dependency>
 
-  <dependency>
-    <groupId>javax.servlet</groupId>
-    <artifactId>jstl</artifactId>
-    <version>1.2</version>
-</dependency>
-
-<dependency>
-  <groupId>javax.validation</groupId>
-  <artifactId>validation-api</artifactId>
-  <version>2.0.1.Final</version>
-</dependency>
-
-<!-- 
-    <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-server</artifactId>
-      <version>${jetty.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-servlet</artifactId>
-      <version>${jetty.version}</version>
-    </dependency>
-
-    <dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-webapp</artifactId>
-			<version>${jetty.version}</version>
-		</dependency> -->
-  
+    <!-- Spring mvc -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-webmvc</artifactId>
@@ -138,9 +119,26 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
       <groupId>org.springframework</groupId>
       <artifactId>spring-web</artifactId>
       <version>${spring.version}</version>
-  </dependency>
+    </dependency>
   
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>4.0.1</version>
+      <scope>provided</scope>
+    </dependency>
 
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+      <version>1.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.validation</groupId>
+      <artifactId>validation-api</artifactId>
+      <version>2.0.1.Final</version>
+    </dependency>
 
     <dependency>
       <groupId>org.springframework</groupId>
@@ -148,6 +146,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
       <version>${spring.version}</version>
     </dependency>
 
+    <!-- Testing -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
@@ -163,13 +162,14 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
     </dependency>
   
   
-
+    <!-- Spring data jpa -->
     <dependency>
       <groupId>org.springframework.data</groupId>
       <artifactId>spring-data-jpa</artifactId>
       <version>2.6.2</version>
    </dependency>
 
+   <!-- Logging -->
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>

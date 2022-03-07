@@ -5,12 +5,12 @@ import java.util.Arrays;
 import javax.transaction.Transactional;
 
 import com.restoreempire.mvc.model.Bank;
+import com.restoreempire.mvc.repository.mysql.MysqlBankRepository;
 
 import org.jboss.logging.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
@@ -18,14 +18,14 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = com.restoreempire.mvc.config.JpaConfig.class)
+@ContextConfiguration(classes = com.restoreempire.mvc.config.PostgresJpaConfig.class)
 @Transactional
 public class BankRepositoryTest {
 
     Logger log = Logger.getLogger(BankRepositoryTest.class);
 
     @Autowired
-    private BankRepository bankRepository;
+    private MysqlBankRepository bankRepository;
 
 
      @BeforeEach
