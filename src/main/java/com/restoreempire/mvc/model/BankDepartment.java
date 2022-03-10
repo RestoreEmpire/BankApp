@@ -1,7 +1,15 @@
 package com.restoreempire.mvc.model;
 
 import javax.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
+
+
+
+// Retail Banking
+// Corporate/Commercial Banking
+// Global Banking
+// Private Banking
+// Investment Banking
 
 @Entity
 @Table(name = "bank_department")
@@ -13,7 +21,7 @@ public class BankDepartment {
     private Long id;
 
 
-    @NotNull
+    @NotEmpty(message = "Please provide a name")
     @Column(name = "department_name")
     private String departmentName;
 

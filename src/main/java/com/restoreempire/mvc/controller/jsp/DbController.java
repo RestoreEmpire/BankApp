@@ -1,28 +1,26 @@
-package com.restoreempire.mvc.controller;
+package com.restoreempire.mvc.controller.jsp;
 
 import java.util.List;
 
 import com.restoreempire.mvc.model.Bank;
-import com.restoreempire.mvc.service.BankService;
+import com.restoreempire.mvc.service.jsp.BankService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Controller
-public class MainController {
+@RequestMapping("/dbs")
+public class DbController {
 
     @Autowired
     BankService service;
 
-    @GetMapping("/")
-    public String index() {
-        return "index";
-    }
 
     @GetMapping("/mysql/create")
     public String showMysqlForm(){

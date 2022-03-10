@@ -2,8 +2,6 @@ package com.restoreempire.mvc.config;
 
 import java.util.Properties;
 
-import javax.persistence.EntityManagerFactory;
-
 import org.postgresql.Driver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

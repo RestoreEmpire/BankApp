@@ -1,18 +1,9 @@
 package com.restoreempire.mvc.config;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRegistration;
-
-import org.springframework.web.WebApplicationInitializer;
-import org.springframework.web.context.ContextLoaderListener;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import org.springframework.web.context.support.GenericWebApplicationContext;
-import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 
-public class MainWebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class MvcWebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     // WebApplicationInitializer
     // @Override
     // public void onStartup(ServletContext sc) throws ServletException {
@@ -31,13 +22,13 @@ public class MainWebAppInitializer extends AbstractAnnotationConfigDispatcherSer
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[] {PostgresJpaConfig.class};
+        return new Class[] {WebSecurityConfig.class};
         // return null;
     }
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[] {WebConfig.class};
+        return new Class[] {WebMvcConfig.class};
     }
 
     @Override

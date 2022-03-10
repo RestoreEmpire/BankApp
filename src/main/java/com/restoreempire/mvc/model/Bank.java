@@ -1,8 +1,9 @@
 package com.restoreempire.mvc.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "bank")
@@ -16,6 +17,7 @@ public class Bank {
 
     @Column(name = "name")
     @NotNull
+    @Size(min = 1)
     private String name;
 
     public Bank(@NotNull String name) {

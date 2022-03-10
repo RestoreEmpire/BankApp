@@ -1,4 +1,4 @@
-package com.restoreempire.mvc.controller;
+package com.restoreempire.mvc.controller.jsp;
 
 import org.springframework.stereotype.Controller;
 
