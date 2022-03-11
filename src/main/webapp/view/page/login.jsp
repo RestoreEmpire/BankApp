@@ -3,16 +3,20 @@
     <jsp:param name="title" value="Login"/>
 </jsp:include>
 <div class="body">
-    <form action="/login" method="post">
+  <div class="container">
+    <form method="post" action="/login">
         <div class="mb-3">
           <label for="username" class="form-label">Username</label>
           <input type="text" class="form-control" id="username" name="username">
         </div>
         <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <label for="password" class="form-label">Password</label>
           <input type="password" class="form-control" id="password" name="password">
         </div>
+        <input  type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
+
+    </div>
 </div>
 <jsp:include page="/view/template/footer.jsp"/>

@@ -202,6 +202,12 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
       <artifactId>spring-security-config</artifactId>
 			<version>${spring-security.version}</version>
     </dependency>
+
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-taglibs</artifactId>
+      <version>${spring-security.version}</version>
+    </dependency>
   </dependencies>
 
   <build>

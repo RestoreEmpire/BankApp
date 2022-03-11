@@ -16,6 +16,8 @@ public class UserService {
     }
 
     public void save(User user){
+        user.setActive(true);
         userRepo.save(user);
     }
+
 }

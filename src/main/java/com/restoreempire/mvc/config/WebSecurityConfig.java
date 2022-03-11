@@ -39,9 +39,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .formLogin().loginPage("/login")
             .defaultSuccessUrl("/", true)
-            .failureUrl("/login?error=true")
                 .permitAll()
-                
+
             .and()
             .logout()
                 .permitAll();
@@ -70,11 +69,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     //         return new BCryptPasswordEncoder();
     // }
 
-    @Bean
-    @Override
-    protected UserDetailsService userDetailsService() {
-		InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-		manager.createUser(User.withDefaultPasswordEncoder().username("user").password("password").roles("USER").build());
-		return manager;
-    }
+    // @Bean
+    // @Override
+    // protected UserDetailsService userDetailsService() {
+	// 	InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager(User.withDefaultPasswordEncoder().username("u").password("1").roles("USER").build());
+    //     // manager.createUser(User.withDefaultPasswordEncoder().username("u").password("1").roles("USER").build());
+	// 	return manager;
+    // }
 }

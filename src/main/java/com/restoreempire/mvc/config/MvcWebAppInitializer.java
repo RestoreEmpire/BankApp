@@ -22,7 +22,7 @@ public class MvcWebAppInitializer extends AbstractAnnotationConfigDispatcherServ
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[] {WebSecurityConfig.class};
+        return new Class[] {WebSecurityConfig.class,};
         // return null;
     }
 

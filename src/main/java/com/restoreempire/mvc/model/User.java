@@ -1,9 +1,12 @@
 package com.restoreempire.mvc.model;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,12 +16,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "bank_user")
@@ -42,14 +47,15 @@ public class User {
     private String middleName;
 
     @NotEmpty
-    @Length(min=6, max=32)
+    @Length(min=4, max=32)
+    @Column(unique = true, nullable = false)
     private String username;
-
-    @NotNull
+    
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
 
-    @Email
-    private String email;
+    // @Email
+    // private String email;
 
     private boolean isActive;
 
@@ -62,12 +68,13 @@ public class User {
     
     public User(String surname, String firstName, String middleName,
             LocalDate birthDate) {
-        // this.department = department;
         this.surname = surname;
         this.firstName = firstName;
         this.middleName = middleName;
-        this.setBirthDate(birthDate);
+        setBirthDate(birthDate);
     }
+    
+    public User() {}
 
     public String getPassword() {
         return password;
@@ -86,7 +93,10 @@ public class User {
     }
 
     public void setRole(Role role) {
-        roles.add(role);
+        if(roles != null)
+            roles.add(role);
+        else 
+            roles = Set.of(role);
     }
 
     public boolean isActive() {
@@ -105,13 +115,6 @@ public class User {
         this.username = username;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public LocalDate getBirthDate() {
         return birthDate;
@@ -121,8 +124,6 @@ public class User {
         this.birthDate = birthDate;
     }
 
-    public User() {
-    }
 
         public String getMiddleName() {
         return middleName;
