@@ -16,7 +16,7 @@
         <input  type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
-
+      <a href="/login/oauth2/auth/github">Login via GitHub</a>
     </div>
 </div>
 <jsp:include page="/view/template/footer.jsp"/>

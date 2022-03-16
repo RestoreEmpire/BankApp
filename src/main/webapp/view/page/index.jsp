@@ -5,10 +5,10 @@
 
     <div class="body">
         <div class="container list-group">
-            <a href='/banks' class="list-group-item list-group-item-action">
-                Banks
+            <a href='/bank-departments' class="list-group-item list-group-item-action">
+                Bank departments
                 <object>
-                    <a class="float-end btn btn-primary" href="/banks/create">Create new</a>
+                    <a class="float-end btn btn-primary" href="/bank-departments/create">Create new</a>
                 </object>
             </a>                                  
         </div>

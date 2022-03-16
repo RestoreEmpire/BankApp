@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
@@ -7,8 +9,8 @@
           rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
           crossorigin="anonymous">
-          <link rel="stylesheet" href="/view/static/style.css">
-          <!-- <link rel="stylesheet" href="/static/fontawesome-free-6.0.0-web/css/all.css"> -->
+          <link rel="stylesheet" href='<c:url value="/view/static/style.css" />'>
+          <link rel="stylesheet" href='<c:url value="/view/static/fontawesome-free-6.0.0-web/css/all.css" />'>
     <% String title = request.getParameter("title"); %>
     
     <title><%= title %> </title>
@@ -24,6 +26,7 @@
                     <li><a href="/logout" class="nav-link px-1 text-white">Logout</a></li>
                 </sec:authorize>
             </ul>
+            <i class="fa-solid fa-pen-to-square"></i>
         </div>
     </div>
 </header>

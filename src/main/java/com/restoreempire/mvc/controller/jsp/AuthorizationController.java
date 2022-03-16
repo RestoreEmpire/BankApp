@@ -4,11 +4,10 @@ import javax.validation.Valid;
 
 import com.restoreempire.mvc.model.Role;
 import com.restoreempire.mvc.model.User;
-import com.restoreempire.mvc.service.jsp.UserService;
+import com.restoreempire.mvc.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -20,13 +19,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Validated
 public class AuthorizationController {
 
-    @Autowired
     UserService service;
 
+    PasswordEncoder passwordEncoder;
+    
+    public AuthorizationController(UserService service, PasswordEncoder passwordEncoder) {
+        this.service = service;
+        this.passwordEncoder = passwordEncoder;
+    }
+    
+
     // @GetMapping("/login")
-	// String loginForm() {
-	// 	return "login";
-	// }
+    // String loginForm() {
+    // 	return "login";
+    // }
 
     // @PostMapping("/login")
     // String login(@Valid @ModelAttribute User user, Model model) {
@@ -46,7 +52,6 @@ public class AuthorizationController {
     //     sc.setAuthentication(auth);
     //     return "redirect:/";
     // }
-
     @GetMapping("/registration")
     String registrationForm() {
         return "registration";
@@ -60,6 +65,7 @@ public class AuthorizationController {
             return "registration";
         }
         user.setRole(Role.USER);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         service.save(user);
         return "redirect:/login";
     }

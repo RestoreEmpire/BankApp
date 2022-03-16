@@ -16,13 +16,13 @@ import javax.validation.constraints.NotEmpty;
 public class BankDepartment {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
 
     @NotEmpty(message = "Please provide a name")
-    @Column(name = "department_name")
+    @Column(name = "department_name", nullable = false)
     private String departmentName;
 
     public BankDepartment() {

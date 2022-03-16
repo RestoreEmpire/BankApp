@@ -3,6 +3,6 @@
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
     crossorigin="anonymous">
 </script>
-<script src="/view/static/script.js"></script>
+<script src="./view/static/script.js"></script>
 </body>
 </html>

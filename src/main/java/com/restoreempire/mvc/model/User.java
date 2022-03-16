@@ -1,10 +1,8 @@
 package com.restoreempire.mvc.model;
 
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -16,11 +14,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -31,7 +26,7 @@ public class User {
     
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     // @OneToOne(cascade = CascadeType.ALL)
@@ -39,9 +34,11 @@ public class User {
     // private BankDepartment department;
 
     @NotEmpty
+    @Column(nullable = false)
     private String surname;
 
     @NotEmpty
+    @Column(nullable = false)
     private String firstName;
 
     private String middleName;
@@ -59,6 +56,8 @@ public class User {
 
     private boolean isActive;
 
+    @NotEmpty(message = "Please enter the password")
+    @Column(nullable = false)
     private String password;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
@@ -125,7 +124,7 @@ public class User {
     }
 
 
-        public String getMiddleName() {
+    public String getMiddleName() {
         return middleName;
     }
 

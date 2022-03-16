@@ -1,5 +1,6 @@
 package com.restoreempire.mvc.config;
 
+
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 
@@ -22,8 +23,11 @@ public class MvcWebAppInitializer extends AbstractAnnotationConfigDispatcherServ
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[] {WebSecurityConfig.class,};
-        // return null;
+        return new Class[] {
+            WebSecurityConfig.FormLoginWebSecurityConfig.class,
+            // WebSecurityConfig.HttpBasicWebSecurityConfig.class,
+            // WebSecurityConfig.OAuth2LoginWebSecurityConfig.class
+        };
     }
 
     @Override
