@@ -1,5 +1,7 @@
 package com.restoreempire.mvc.config;
 
+import javax.sql.DataSource;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -25,9 +27,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class WebSecurityConfig {
     
-    DriverManagerDataSource postgresDataSource;
+    DataSource postgresDataSource;
 
-    public WebSecurityConfig(DriverManagerDataSource postgresDataSource) {
+    public WebSecurityConfig(DataSource postgresDataSource) {
         this.postgresDataSource = postgresDataSource;
     }
     
@@ -51,7 +53,7 @@ public class WebSecurityConfig {
         protected void configure(HttpSecurity http) throws Exception {
            
             http.authorizeRequests()
-                .antMatchers("/", "/registration", "/login/**")
+                .antMatchers("/", "/registration", "/login/**", "/current")
                     .permitAll()
                 .anyRequest().authenticated()
                     
@@ -60,8 +62,9 @@ public class WebSecurityConfig {
                 // .httpBasic()
 
                 .and()
-                .formLogin().loginPage("/login")
-                .defaultSuccessUrl("/", true)
+                .formLogin()
+                    .loginPage("/login")
+                    // .defaultSuccessUrl("/", true)
                     .permitAll()
                     
                 
