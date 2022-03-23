@@ -1,8 +1,10 @@
 package com.restoreempire.mvc.model;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -14,15 +16,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name = "bank_user")
-public class User {
+public class User implements UserDetails {
     
 
     @Id
@@ -54,26 +60,32 @@ public class User {
     // @Email
     // private String email;
 
-    private boolean isActive;
+    private boolean enabled;
 
     @NotEmpty(message = "Please enter the password")
     @Column(nullable = false)
     private String password;
 
-    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
-    @Enumerated(EnumType.STRING)
+    @Column(name = "github_id")
+    private String githubId;
+
+
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch=FetchType.EAGER)
+    @JoinTable(
+        name = "user_roles",
+        joinColumns = @JoinColumn(name="user_id"), 
+        inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
     
-    public User(String surname, String firstName, String middleName,
-            LocalDate birthDate) {
-        this.surname = surname;
-        this.firstName = firstName;
-        this.middleName = middleName;
-        setBirthDate(birthDate);
-    }
-    
     public User() {}
+
+    public String getGithubId() {
+        return githubId;
+    }
+
+    public void setGithubId(String githubId) {
+        this.githubId = githubId;
+    }
 
     public String getPassword() {
         return password;
@@ -98,12 +110,12 @@ public class User {
             roles = Set.of(role);
     }
 
-    public boolean isActive() {
-        return isActive;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public void setActive(boolean isActive) {
-        this.isActive = isActive;
+    public void setActive(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public String getUsername() {
@@ -122,7 +134,6 @@ public class User {
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
-
 
     public String getMiddleName() {
         return middleName;
@@ -154,5 +165,25 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
     }
 }

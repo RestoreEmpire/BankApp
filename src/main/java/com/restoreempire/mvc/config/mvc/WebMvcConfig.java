@@ -1,4 +1,4 @@
-package com.restoreempire.mvc.config;
+package com.restoreempire.mvc.config.mvc;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

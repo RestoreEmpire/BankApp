@@ -1,4 +1,4 @@
-package com.restoreempire.mvc.config;
+package com.restoreempire.mvc.config.jpa;
 
 import java.util.Properties;
 

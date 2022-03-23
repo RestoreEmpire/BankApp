@@ -1,5 +1,7 @@
-package com.restoreempire.mvc.config;
+package com.restoreempire.mvc.config.mvc;
 
+
+import com.restoreempire.mvc.config.security.WebSecurityConfig;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
