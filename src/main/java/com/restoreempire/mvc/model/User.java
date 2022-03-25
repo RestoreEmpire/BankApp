@@ -5,12 +5,8 @@ import java.util.Collection;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -35,10 +31,6 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    // @OneToOne(cascade = CascadeType.ALL)
-    // @JoinColumn(name = "department", referencedColumnName = "id")
-    // private BankDepartment department;
-
     @NotEmpty
     @Column(nullable = false)
     private String surname;
@@ -56,9 +48,6 @@ public class User implements UserDetails {
     
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
-
-    // @Email
-    // private String email;
 
     private boolean enabled;
 
