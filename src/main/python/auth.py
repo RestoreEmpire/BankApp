@@ -1,17 +1,23 @@
 import requests
 import info
-from requests.auth import HTTPBasicAuth
+
+login_url = f"{info.url}/login"
+login = {'username' : 'user', 'password' : '123'}
 
 
+def get_token():
+    good_post = requests.post(url=login_url, data=login)
+    token = good_post.json()['access_token']   
+    return token
 
-# get = requests.get(info.url)
-# print(get.status_code)
-# print(get.text)
+def print_token():
+    print(get_token)
 
-good_post = requests.post(url=info.url, auth=('user', '123'))
-# good_post = requests.post(url="http://localhost:8080/login?username=user&password=123")
-print(good_post.status_code)
-print(good_post.text)
+def header_boiler(token):
+    return {'Authorization' : f'Bearer {token}'}
+
+def get_auth_header():
+    return header_boiler(get_token())
 
 
 

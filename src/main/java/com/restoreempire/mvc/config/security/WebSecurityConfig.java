@@ -93,11 +93,16 @@ public class WebSecurityConfig {
             //     authorizedClientService,
             //     clientRegistrationRepository 
             // );
+            http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+            http.csrf().disable();
             http
             // .addFilter(authFilter)
             // .addFilter(redirectFilter)
-            
+            .addFilter(new JwtAuthenticationFilter(authenticationManagerBean()))
+            .addFilter(new JwtAuthorizationFilter(authenticationManagerBean(), userService))
+            // .antMatcher("/login")
             .authorizeRequests()
+            
             .antMatchers("/", "/registration", "/login/**", "/current", "/oauth2/**")
             .permitAll()
             .anyRequest().authenticated()
@@ -119,10 +124,11 @@ public class WebSecurityConfig {
             ;
                 
             // http.httpBasic();
-            http.csrf().disable()
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-            http.addFilter(new JwtAuthenticationFilter(authenticationManagerBean()));
-            http.addFilter(new JwtAuthorizationFilter(authenticationManagerBean(), userService));
+            // http.antMatcher("/login")
+            // .csrf().disable();
+            // http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+            // http.addFilter(new JwtAuthenticationFilter(authenticationManagerBean()));
+            // http.addFilter(new JwtAuthorizationFilter(authenticationManagerBean(), userService));
             // http.oauth2Login()
             // // .successHandler(new GithubSuccessHandler())
             // .loginPage("/login/oauth2")
